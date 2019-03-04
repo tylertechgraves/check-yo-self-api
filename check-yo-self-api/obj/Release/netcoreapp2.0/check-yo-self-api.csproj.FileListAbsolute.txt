@@ -1,0 +1,12 @@
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\bin\Release\netcoreapp2.0\check-yo-self-api.deps.json
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\bin\Release\netcoreapp2.0\check-yo-self-api.runtimeconfig.json
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\bin\Release\netcoreapp2.0\check-yo-self-api.runtimeconfig.dev.json
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\bin\Release\netcoreapp2.0\check-yo-self-api.dll
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\bin\Release\netcoreapp2.0\check-yo-self-api.pdb
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\obj\Release\netcoreapp2.0\check-yo-self-api.csprojAssemblyReference.cache
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\obj\Release\netcoreapp2.0\check-yo-self-api.csproj.CoreCompileInputs.cache
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\obj\Release\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\obj\Release\netcoreapp2.0\check-yo-self-api.AssemblyInfoInputs.cache
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\obj\Release\netcoreapp2.0\check-yo-self-api.AssemblyInfo.cs
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\obj\Release\netcoreapp2.0\check-yo-self-api.dll
+D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api\obj\Release\netcoreapp2.0\check-yo-self-api.pdb

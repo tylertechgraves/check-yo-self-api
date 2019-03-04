@@ -1,0 +1,33 @@
+2019-03-04 11:43:06.878 -06:00 [Information] [PLADPDTMGRAVES] [] User profile is available. Using 'C:\Users\mark.graves\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-03-04 11:43:07.579 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTT:00000001] Request starting HTTP/1.1 GET http://localhost:5001/swagger  
+2019-03-04 11:43:07.606 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTT:00000001] Request finished in 29.9856ms 302 
+2019-03-04 11:43:07.609 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTT:00000002] Request starting HTTP/1.1 GET http://localhost:5001/swagger/index.html  
+2019-03-04 11:43:07.769 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTT:00000002] Request finished in 158.9885ms 200 text/html; charset=utf-8
+2019-03-04 11:43:07.784 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTT:00000003] Request starting HTTP/1.1 GET http://localhost:5001/swagger/swagger-ui.css  
+2019-03-04 11:43:07.786 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTV:00000001] Request starting HTTP/1.1 GET http://localhost:5001/swagger/swagger-ui-standalone-preset.js  
+2019-03-04 11:43:07.795 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTU:00000001] Request starting HTTP/1.1 GET http://localhost:5001/swagger/swagger-ui-bundle.js  
+2019-03-04 11:43:07.811 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTV:00000001] The file /swagger-ui-standalone-preset.js was not modified
+2019-03-04 11:43:07.811 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTT:00000003] The file /swagger-ui.css was not modified
+2019-03-04 11:43:07.811 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTU:00000001] The file /swagger-ui-bundle.js was not modified
+2019-03-04 11:43:07.812 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTV:00000001] Request finished in 25.823ms 304 application/javascript
+2019-03-04 11:43:07.812 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTT:00000003] Request finished in 27.3192ms 304 text/css
+2019-03-04 11:43:07.812 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTU:00000001] Request finished in 16.5848ms 304 application/javascript
+2019-03-04 11:43:08.086 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTU:00000002] Request starting HTTP/1.1 GET http://localhost:5001/swagger/v1/swagger.json  
+2019-03-04 11:43:08.837 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTU:00000002] Request finished in 751.4368ms 200 application/json; charset=utf-8
+2019-03-04 11:43:15.887 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTU:00000003] Request starting HTTP/1.1 GET http://localhost:5001/api/GettingStarted  
+2019-03-04 11:43:15.950 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTU:00000003] Executing action method check_yo_self_api.Server.Controllers.api.GettingStartedController.Get (check-yo-self-api) with arguments (null) - ModelState is "Valid"
+2019-03-04 11:43:15.959 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTU:00000003] Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2019-03-04 11:43:15.966 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTU:00000003] Executed action check_yo_self_api.Server.Controllers.api.GettingStartedController.Get (check-yo-self-api) in 25.797700000000003ms
+2019-03-04 11:43:15.966 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0P3E9KNTU:00000003] Request finished in 79.0634ms 200 application/json; charset=utf-8
+2019-03-04 14:42:44.760 -06:00 [Information] [PLADPDTMGRAVES] [] User profile is available. Using 'C:\Users\mark.graves\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-03-04 14:42:45.351 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0S7QAU2GM:00000001] Request starting HTTP/1.1 GET http://localhost:5001/swagger  
+2019-03-04 14:42:45.378 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0S7QAU2GM:00000001] Request finished in 30.489ms 302 
+2019-03-04 14:42:45.381 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0S7QAU2GM:00000002] Request starting HTTP/1.1 GET http://localhost:5001/swagger/index.html  
+2019-03-04 14:42:45.556 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0S7QAU2GM:00000002] Request finished in 174.9257ms 200 text/html; charset=utf-8
+2019-03-04 14:42:45.842 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0S7QAU2GM:00000003] Request starting HTTP/1.1 GET http://localhost:5001/swagger/v1/swagger.json  
+2019-03-04 14:42:46.601 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0S7QAU2GM:00000003] Request finished in 758.9197ms 200 application/json; charset=utf-8
+2019-03-04 14:42:55.068 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0S7QAU2GM:00000004] Request starting HTTP/1.1 GET http://localhost:5001/api/GettingStarted  
+2019-03-04 14:42:55.130 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0S7QAU2GM:00000004] Executing action method check_yo_self_api.Server.Controllers.api.GettingStartedController.Get (check-yo-self-api) with arguments (null) - ModelState is "Valid"
+2019-03-04 14:42:55.140 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0S7QAU2GM:00000004] Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+2019-03-04 14:42:55.147 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0S7QAU2GM:00000004] Executed action check_yo_self_api.Server.Controllers.api.GettingStartedController.Get (check-yo-self-api) in 26.236700000000003ms
+2019-03-04 14:42:55.148 -06:00 [Information] [PLADPDTMGRAVES] [0HLL0S7QAU2GM:00000004] Request finished in 79.4381ms 200 application/json; charset=utf-8
