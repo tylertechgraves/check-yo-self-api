@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using check_yo_self_api.Configuration;
 
 namespace check_yo_self_api.Server.Extensions
 {
@@ -33,18 +34,23 @@ namespace check_yo_self_api.Server.Extensions
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             // Add framework services.
-            // services.AddDbContext<ApplicationDbContext>(options =>
-            // {
-            //     string useSqLite = configuration["Data:useSqLite"];
-            //     if (useSqLite.ToLower() == "true")
-            //     {
-            //         options.UseSqlite(configuration["Data:SqlLiteConnectionString"]);
-            //     }
-            //     else
-            //     {
-            //         options.UseSqlServer(configuration["Data:SqlServerConnectionString"]);
-            //     }
-            // });
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                string DbDriver = configuration["Data:DatabaseDriver"];
+
+                if (DbDriver == DatabaseDrivers.SqlServer)
+                {
+                    options.UseSqlServer(configuration[ConnectionStringKeys.SqlServer]);
+                }
+                else if (DbDriver == DatabaseDrivers.MySQL)
+                {
+                    options.UseMySQL(configuration[ConnectionStringKeys.MySql]);
+                }
+                else if (DbDriver == DatabaseDrivers.SqlLite)
+                {
+                    options.UseSqlite(configuration[ConnectionStringKeys.SqlLite]);
+                }
+            });
             return services;
         }
         public static IServiceCollection RegisterCustomServices(this IServiceCollection services)

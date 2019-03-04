@@ -54,7 +54,7 @@ namespace check_yo_self_api.Server.Extensions
             try
             {
                 var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
-                // serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
+                serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
             }
             catch (Exception) { }
             return app;
