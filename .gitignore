@@ -229,5 +229,7 @@ ModelManifest.xml
 
 check-yo-self-api/obj
 check-yo-self-api/bin
+check-yo-self-api/logs
 check-yo-self-api-SDK/obj
 check-yo-self-api-SDK/bin
+check-yo-self-api-SDK/logs
