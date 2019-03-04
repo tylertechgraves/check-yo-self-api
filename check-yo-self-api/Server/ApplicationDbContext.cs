@@ -22,7 +22,15 @@ namespace check_yo_self_api.Server
                     LastName = "Snodgrass",
                     FirstName = "Dick",
                     Salary = 55000,
-                    FirstPaycheckDate = DateTime.Now
+                    FirstPaycheckDate = new DateTime(2019, 2, 22)
+                },
+                new Employee
+                {
+                    EmployeeId = 2,
+                    LastName = "Yubettuhdo",
+                    FirstName = "Helen",
+                    Salary = 75000,
+                    FirstPaycheckDate = new DateTime(2019, 2, 22)
                 }
             );
         }    
