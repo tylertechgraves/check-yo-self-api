@@ -1,9 +1,0 @@
-D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api-SDK\bin\Debug\netstandard2.0\check-yo-self-api-sdk.deps.json
-D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api-SDK\bin\Debug\netstandard2.0\check-yo-self-api-sdk.dll
-D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api-SDK\bin\Debug\netstandard2.0\check-yo-self-api-sdk.pdb
-D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api-SDK\obj\Debug\netstandard2.0\check-yo-self-api-sdk.csprojAssemblyReference.cache
-D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api-SDK\obj\Debug\netstandard2.0\check-yo-self-api-sdk.csproj.CoreCompileInputs.cache
-D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api-SDK\obj\Debug\netstandard2.0\check-yo-self-api-sdk.AssemblyInfoInputs.cache
-D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api-SDK\obj\Debug\netstandard2.0\check-yo-self-api-sdk.AssemblyInfo.cs
-D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api-SDK\obj\Debug\netstandard2.0\check-yo-self-api-sdk.dll
-D:\Git Repositories\GitHub\check-yo-self-api\check-yo-self-api-SDK\obj\Debug\netstandard2.0\check-yo-self-api-sdk.pdb
