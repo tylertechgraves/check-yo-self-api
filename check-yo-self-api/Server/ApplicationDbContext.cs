@@ -46,7 +46,7 @@ namespace check_yo_self_api.Server
                     LastName = "Needles",
                     FirstName = "Sharon",
                     Salary = 100001.77M,
-                    FirstPaycheckDate = new DateTime(2018, 30, 11)
+                    FirstPaycheckDate = new DateTime(2018, 3, 9)
                 },
                 new Employee
                 {
