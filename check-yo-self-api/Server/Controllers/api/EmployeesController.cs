@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 namespace check_yo_self_api.Server.Controllers.api
 {
   [Route("api/[controller]")]
-  //[Authorize]
   [AllowAnonymous]
   public class EmployeesController : BaseController
   {
@@ -26,7 +25,9 @@ namespace check_yo_self_api.Server.Controllers.api
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(List<Employee>), 200)]
+    [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAll()
     {
       if (!ModelState.IsValid)
@@ -49,7 +50,9 @@ namespace check_yo_self_api.Server.Controllers.api
     }
 
     [HttpGet("{employeeId}")]
-    [ProducesResponseType(typeof(Employee), 200)]
+    [ProducesResponseType(typeof(Employee), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetById(int employeeId)
     {
       if (!ModelState.IsValid)
@@ -72,7 +75,9 @@ namespace check_yo_self_api.Server.Controllers.api
     }
 
     [HttpGet("SalaryGreaterEqualTo/{salary:decimal}")]
-    [ProducesResponseType(typeof(List<Employee>), 200)]
+    [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetBySalary(decimal salary)
     {
       if (!ModelState.IsValid)
@@ -98,7 +103,9 @@ namespace check_yo_self_api.Server.Controllers.api
     }
 
     [HttpGet("QueryByLastName/{lastName}")]
-    [ProducesResponseType(typeof(List<Employee>), 200)]
+    [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetByLastName(string lastName)
     {
       if (!ModelState.IsValid)
@@ -120,8 +127,10 @@ namespace check_yo_self_api.Server.Controllers.api
       }
     }
 
-    [HttpGet("QueryByLastName/{firstName}")]
-    [ProducesResponseType(typeof(List<Employee>), 200)]
+    [HttpGet("QueryByFirstName/{firstName}")]
+    [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetByFirstName(string firstName)
     {
       if (!ModelState.IsValid)
@@ -144,7 +153,9 @@ namespace check_yo_self_api.Server.Controllers.api
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(Employee), 201)]
+    [ProducesResponseType(typeof(Employee), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Post(Employee employee)
     {
       if (!ModelState.IsValid)
@@ -158,6 +169,39 @@ namespace check_yo_self_api.Server.Controllers.api
           _context.Employees.Add(employee);
           await _context.SaveChangesAsync();
           return Created("/api/Employees", employee);
+        }
+        catch (Exception ex)
+        {
+          _logger.LogError(1, ex, "Unable to query employees by first name");
+          return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+      }
+    }
+
+    [HttpDelete("{employeeId}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Delete(int employeeId)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest();
+      }
+      else
+      {
+        try
+        {
+          var employee = await _context.Employees.FindAsync(employeeId);
+
+          if (employee == null)
+            return NotFound();
+
+          _context.Employees.Remove(employee);
+          await _context.SaveChangesAsync();
+          
+          return NoContent();
         }
         catch (Exception ex)
         {
