@@ -156,7 +156,7 @@ namespace check_yo_self_api.Server.Controllers.api
     [ProducesResponseType(typeof(Employee), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Post(Employee employee)
+    public async Task<IActionResult> Post([FromBody]Employee employee)
     {
       if (!ModelState.IsValid)
       {
@@ -172,7 +172,7 @@ namespace check_yo_self_api.Server.Controllers.api
         }
         catch (Exception ex)
         {
-          _logger.LogError(1, ex, "Unable to query employees by first name");
+          _logger.LogError(1, ex, "Unable to add new employee: " + employee.LastName + ", " + employee.FirstName);
           return StatusCode(StatusCodes.Status500InternalServerError);
         }
       }
@@ -205,7 +205,7 @@ namespace check_yo_self_api.Server.Controllers.api
         }
         catch (Exception ex)
         {
-          _logger.LogError(1, ex, "Unable to query employees by first name");
+          _logger.LogError(1, ex, "Unable to delete the specified employee with id: " + employeeId);
           return StatusCode(StatusCodes.Status500InternalServerError);
         }
       }
