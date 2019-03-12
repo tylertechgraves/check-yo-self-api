@@ -6,6 +6,7 @@ using check_yo_self_api.Server.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace check_yo_self_api.Server.Controllers.api
@@ -206,6 +207,37 @@ namespace check_yo_self_api.Server.Controllers.api
         catch (Exception ex)
         {
           _logger.LogError(1, ex, "Unable to delete the specified employee with id: " + employeeId);
+          return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+      }
+    }
+
+    [HttpPut("{employeeId}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Update(int employeeId, [FromBody]Employee employee)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest();
+      }
+      else
+      {
+        try
+        {
+          if (employeeId != employee.EmployeeId)
+            return BadRequest();
+
+          _context.Entry(employee).State = EntityState.Modified;
+
+          await _context.SaveChangesAsync();
+
+          return NoContent();
+        }
+        catch (Exception ex)
+        {
+          _logger.LogError(1, ex, "Unable to update the specified employee with id: " + employee.EmployeeId);
           return StatusCode(StatusCodes.Status500InternalServerError);
         }
       }
