@@ -153,12 +153,12 @@ namespace check_yo_self_api.Server.Controllers.api
       }
     }
 
-    [HttpGet("QueryByFirstName/{firstName}/{lastName}")]
+    [HttpGet("QueryByFullName/{firstName}/{lastName}")]
     [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByFullName(string firstName, string lastName)
+    public async Task<IActionResult> QueryByFullName(string firstName, string lastName)
     {
       if (!ModelState.IsValid)
       {
@@ -169,7 +169,7 @@ namespace check_yo_self_api.Server.Controllers.api
         try
         {
           var employees = await _context.Employees.Where(e => e.FirstName.ToLower() == firstName.ToLower() && e.LastName.ToLower() == lastName.ToLower()).ToAsyncEnumerable().ToList();
-          
+
           if (employees.Count() == 0)
             return NotFound();
           else
