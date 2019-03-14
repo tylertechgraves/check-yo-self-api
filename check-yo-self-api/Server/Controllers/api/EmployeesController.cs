@@ -153,6 +153,36 @@ namespace check_yo_self_api.Server.Controllers.api
       }
     }
 
+    [HttpGet("QueryByFirstName/{firstName}/{lastName}")]
+    [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetByFullName(string firstName, string lastName)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest();
+      }
+      else
+      {
+        try
+        {
+          var employees = await _context.Employees.Where(e => e.FirstName.ToLower() == firstName.ToLower() && e.LastName.ToLower() == lastName.ToLower()).ToAsyncEnumerable().ToList();
+          
+          if (employees.Count() == 0)
+            return NotFound();
+          else
+            return Ok(employees);
+        }
+        catch (Exception ex)
+        {
+          _logger.LogError(1, ex, "Unable to query employees by first name");
+          return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+      }
+    }
+
     [HttpPost]
     [ProducesResponseType(typeof(Employee), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
