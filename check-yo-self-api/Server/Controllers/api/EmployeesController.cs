@@ -39,7 +39,7 @@ namespace check_yo_self_api.Server.Controllers.api
       {
         try
         {
-          var employees = await _context.Employees.ToAsyncEnumerable().ToList();
+          var employees = await _context.Employees.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToAsyncEnumerable().ToList();
           return Ok(employees);
         }
         catch (Exception ex)
