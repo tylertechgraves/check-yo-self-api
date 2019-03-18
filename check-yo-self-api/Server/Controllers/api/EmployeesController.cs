@@ -170,10 +170,7 @@ namespace check_yo_self_api.Server.Controllers.api
         {
           var employees = await _context.Employees.Where(e => e.FirstName.ToLower() == firstName.ToLower() && e.LastName.ToLower() == lastName.ToLower()).ToAsyncEnumerable().ToList();
 
-          if (employees.Count() == 0)
-            return NotFound();
-          else
-            return Ok(employees);
+          return Ok(employees);
         }
         catch (Exception ex)
         {
