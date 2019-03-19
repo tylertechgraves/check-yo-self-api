@@ -1,0 +1,15 @@
+version: '3.5'
+services:
+
+  check-yo-self:
+    image: check-yo-self:1.0.0
+    ports:
+      - 5000:80
+    environment:
+      - CheckYoSelf__employeesApiBaseUrl=http://check-yo-self-api/
+      - CheckYoSelf__employeesButtonVisible=false
+
+  check-yo-self-api:
+    image: check-yo-self-api:1.0.0
+    ports:
+      - 5001:80

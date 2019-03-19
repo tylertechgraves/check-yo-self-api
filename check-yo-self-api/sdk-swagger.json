@@ -5,6 +5,12 @@
     "title": "check-yo-self-api",
     "version": "1.0.0"
   },
+  "consumes": [
+    "application/json-patch+json",
+    "application/json",
+    "text/json",
+    "application/*+json"
+  ],
   "paths": {
     "/api/Employees": {
       "get": {
@@ -41,6 +47,12 @@
           "Employees"
         ],
         "operationId": "Employees_Post",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
         "produces": [
           "text/plain",
           "application/json",
@@ -48,45 +60,12 @@
         ],
         "parameters": [
           {
-            "type": "integer",
-            "name": "EmployeeId",
-            "in": "query",
+            "name": "employee",
+            "in": "body",
             "required": true,
-            "format": "int32",
-            "x-nullable": false
-          },
-          {
-            "type": "string",
-            "name": "LastName",
-            "in": "query",
-            "required": true,
-            "maxLength": 1024,
-            "minLength": 0,
-            "x-nullable": true
-          },
-          {
-            "type": "string",
-            "name": "FirstName",
-            "in": "query",
-            "required": true,
-            "maxLength": 1024,
-            "minLength": 0,
-            "x-nullable": true
-          },
-          {
-            "type": "number",
-            "name": "Salary",
-            "in": "query",
-            "required": true,
-            "format": "decimal",
-            "x-nullable": false
-          },
-          {
-            "type": "string",
-            "name": "FirstPaycheckDate",
-            "in": "query",
-            "required": true,
-            "format": "date-time",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            },
             "x-nullable": false
           }
         ],
@@ -170,6 +149,48 @@
             "description": ""
           },
           "400": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Employees"
+        ],
+        "operationId": "Employees_Update",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "employeeId",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "name": "employee",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": ""
+          },
+          "500": {
             "description": ""
           }
         }
@@ -291,6 +312,56 @@
             "description": ""
           },
           "400": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/Employees/QueryByFullName/{firstName}/{lastName}": {
+      "get": {
+        "tags": [
+          "Employees"
+        ],
+        "operationId": "Employees_QueryByFullName",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "firstName",
+            "in": "path",
+            "required": true,
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "lastName",
+            "in": "path",
+            "required": true,
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Employee"
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          },
+          "400": {
+            "description": ""
+          },
+          "404": {
             "description": ""
           }
         }
