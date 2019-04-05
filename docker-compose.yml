@@ -10,6 +10,6 @@ services:
       - CheckYoSelf__employeesButtonVisible=false
 
   check-yo-self-api:
-    image: check-yo-self-api:1.0.0
+    image: check-yo-self-api:1.0.1
     ports:
       - 5001:80
