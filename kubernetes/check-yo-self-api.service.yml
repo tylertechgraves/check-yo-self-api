@@ -13,7 +13,7 @@ spec:
         run: check-yo-self-api
     spec:
       containers:
-      - image: check-yo-self-api:1.0.0
+      - image: check-yo-self-api:1.0.1
         name: check-yo-self-api
         # env:
         # - name: ConfigurationServer__uri
