@@ -1,16 +1,10 @@
 ﻿{
-  "x-generator": "NSwag v12.0.13.0 (NJsonSchema v9.13.17.0 (Newtonsoft.Json v11.0.0.0))",
+  "x-generator": "NSwag v13.0.4.0 (NJsonSchema v10.0.21.0 (Newtonsoft.Json v11.0.0.0))",
   "swagger": "2.0",
   "info": {
     "title": "check-yo-self-api",
     "version": "1.0.0"
   },
-  "consumes": [
-    "application/json-patch+json",
-    "application/json",
-    "text/json",
-    "application/*+json"
-  ],
   "paths": {
     "/api/Employees": {
       "get": {
@@ -25,7 +19,7 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
+            "x-nullable": false,
             "description": "",
             "schema": {
               "type": "array",
@@ -71,7 +65,7 @@
         ],
         "responses": {
           "201": {
-            "x-nullable": true,
+            "x-nullable": false,
             "description": "",
             "schema": {
               "$ref": "#/definitions/Employee"
@@ -109,7 +103,7 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
+            "x-nullable": false,
             "description": "",
             "schema": {
               "$ref": "#/definitions/Employee"
@@ -219,7 +213,7 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
+            "x-nullable": false,
             "description": "",
             "schema": {
               "type": "array",
@@ -259,7 +253,7 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
+            "x-nullable": false,
             "description": "",
             "schema": {
               "type": "array",
@@ -299,7 +293,7 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
+            "x-nullable": false,
             "description": "",
             "schema": {
               "type": "array",
@@ -346,7 +340,7 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
+            "x-nullable": false,
             "description": "",
             "schema": {
               "type": "array",
@@ -380,7 +374,7 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
+            "x-nullable": false,
             "description": "",
             "schema": {
               "$ref": "#/definitions/GettingStarted"
@@ -393,7 +387,6 @@
   "definitions": {
     "Employee": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "employeeId",
         "lastName",
@@ -429,7 +422,6 @@
     },
     "GettingStarted": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "applicationName": {
           "type": "string"

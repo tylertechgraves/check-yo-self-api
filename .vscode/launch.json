@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/check-yo-self-api/bin/Debug/netcoreapp2.1/check-yo-self-api.dll",
+            "program": "${workspaceRoot}/check-yo-self-api/bin/Debug/netcoreapp2.2/check-yo-self-api.dll",
             "args": [
                 // "dropdb",
                 // "migratedb",
@@ -40,7 +40,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/check-yo-self-api/bin/Debug/netcoreapp2.1/check-yo-self-api.dll",
+            "program": "${workspaceRoot}/check-yo-self-api/bin/Debug/netcoreapp2.2/check-yo-self-api.dll",
             "args": [],
             "cwd": "${workspaceRoot}/check-yo-self-api",
             "stopAtEntry": false,
