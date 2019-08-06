@@ -18,8 +18,6 @@ namespace check_yo_self_api.Server.Entities.Config
             set { this._baseUriService = value; }
         }
         public string Version { get; set; }
-
-        public ApplicationInsights ApplicationInsights { get; set; }
         public ConfigurationServer ConfigurationServer { get; set; }
         public TokenValidation TokenValidation { get; set; }
     }

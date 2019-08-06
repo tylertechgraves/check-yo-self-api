@@ -88,7 +88,7 @@ namespace check_yo_self_api
                 .UseStaticFiles()
                 .UseAuthentication()
                 // Enable middleware to serve generated Swagger as a JSON endpoint
-                .UseSwagger()
+                .UseOpenApi()
                 .UseMvc(routes =>
                 {
                     // default route for MVC/API controllers
