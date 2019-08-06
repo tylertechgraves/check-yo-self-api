@@ -5,15 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using check_yo_self_api.Server;
 using check_yo_self_api.Server.Startup;
 using check_yo_self_api.Server.Extensions;
-using check_yo_self_api.Server.Entities;
 using check_yo_self_api.Server.Entities.Config;
-using Microsoft.AspNetCore.Authentication;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.FileProviders;
-using System.IO;
 using Microsoft.AspNetCore.StaticFiles;
-using NSwag.AspNetCore;
 using Microsoft.Extensions.Logging;
 
 namespace check_yo_self_api

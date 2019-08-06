@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>check-yo-self-api-SDK</id>
+        <version>1.0.0</version>
+        <title>SDK for check-yo-self-api in .NET Standard</title>
+        <authors>Mark Graves</authors>
+        <owners>Mark Graves</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>SDK for check-yo-self-api in .NET Standard NuGet Package</description>
+        <copyright>Copyright © 2018 Mark Graves. All Rights Reserved Worldwide.</copyright>
+        <tags>check-yo-self-api SDK API dotnet Core Standard Types .NET</tags>
+    </metadata>
+    <files>
+        <file src="..\out\*.*" target="lib\netstandard2.2" />
+    </files>
+</package>
