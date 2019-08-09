@@ -13,3 +13,8 @@ services:
     image: check-yo-self-api:1.0.1
     ports:
       - 5001:80
+
+  check-yo-self-indexer:
+    image: check-yo-self-indexer:1.0.1
+    ports:
+      - 5002:80
