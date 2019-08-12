@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using check_yo_self_api.Server.Entities;
+using check_yo_self_api.Server.Entities.Config;
+using check_yo_self_indexer_client;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace check_yo_self_api.Server.Controllers.api
 {
@@ -18,15 +23,19 @@ namespace check_yo_self_api.Server.Controllers.api
     private readonly ApplicationDbContext _context;
 
     private readonly ILogger _logger;
+    private readonly AppConfig _appConfig;
+    private readonly HttpClient _httpClient;
 
-    public EmployeesController(ApplicationDbContext context, ILoggerFactory loggerFactory)
+    public EmployeesController(IOptionsSnapshot<AppConfig> appConfig, ApplicationDbContext context, ILoggerFactory loggerFactory, IHttpClientFactory httpClientFactory)
     {
       _context = context;
       _logger = loggerFactory.CreateLogger<EmployeesController>();
+      _appConfig = appConfig.Value;
+      _httpClient = httpClientFactory.CreateClient();
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<check_yo_self_api.Server.Entities.Employee>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAll()
@@ -51,7 +60,7 @@ namespace check_yo_self_api.Server.Controllers.api
     }
 
     [HttpGet("{employeeId}")]
-    [ProducesResponseType(typeof(Employee), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(check_yo_self_api.Server.Entities.Employee), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetById(int employeeId)
@@ -76,7 +85,7 @@ namespace check_yo_self_api.Server.Controllers.api
     }
 
     [HttpGet("SalaryGreaterEqualTo/{salary:decimal}")]
-    [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<check_yo_self_api.Server.Entities.Employee>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetBySalary(decimal salary)
@@ -104,7 +113,7 @@ namespace check_yo_self_api.Server.Controllers.api
     }
 
     [HttpGet("QueryByLastName/{lastName}")]
-    [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<check_yo_self_api.Server.Entities.Employee>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetByLastName(string lastName)
@@ -129,7 +138,7 @@ namespace check_yo_self_api.Server.Controllers.api
     }
 
     [HttpGet("QueryByFirstName/{firstName}")]
-    [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<check_yo_self_api.Server.Entities.Employee>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetByFirstName(string firstName)
@@ -154,7 +163,7 @@ namespace check_yo_self_api.Server.Controllers.api
     }
 
     [HttpGet("QueryByFullName/{firstName}/{lastName}")]
-    [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<check_yo_self_api.Server.Entities.Employee>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -181,10 +190,10 @@ namespace check_yo_self_api.Server.Controllers.api
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(Employee), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(check_yo_self_api.Server.Entities.Employee), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Post([FromBody]Employee employee)
+    public async Task<IActionResult> Post([FromBody]check_yo_self_api.Server.Entities.Employee employee)
     {
       if (!ModelState.IsValid)
       {
@@ -196,7 +205,24 @@ namespace check_yo_self_api.Server.Controllers.api
         {
           _context.Employees.Add(employee);
           await _context.SaveChangesAsync();
-          return Created("/api/Employees", employee);
+
+          // Index the newly-added employee
+          var indexerClient = new check_yo_self_indexer_client.EmployeesClient(_appConfig.IndexerBaseUri, _httpClient);
+          var clientEmployee = employee.Adapt<check_yo_self_indexer_client.Employee>();
+          var clientList = new List<check_yo_self_indexer_client.Employee>()
+          {
+            clientEmployee
+          };
+
+          try 
+          {
+            await indexerClient.BulkPostAsync(clientList);
+            return Created("/api/Employees", employee);
+          }
+          catch(SwaggerException swaggerException)
+          {
+            return StatusCode(swaggerException.StatusCode);
+          }
         }
         catch (Exception ex)
         {
@@ -228,8 +254,19 @@ namespace check_yo_self_api.Server.Controllers.api
 
           _context.Employees.Remove(employee);
           await _context.SaveChangesAsync();
+
+          // Remove deleted item from the index
+          var indexerClient = new check_yo_self_indexer_client.EmployeesClient(_appConfig.IndexerBaseUri, _httpClient);
           
-          return NoContent();
+          try
+          {
+            await indexerClient.DeleteAsync(employeeId);
+            return NoContent();
+          }
+          catch(SwaggerException swaggerException)
+          {
+            return StatusCode(swaggerException.StatusCode);
+          }
         }
         catch (Exception ex)
         {
@@ -244,7 +281,7 @@ namespace check_yo_self_api.Server.Controllers.api
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Update(int employeeId, [FromBody]Employee employee)
+    public async Task<IActionResult> Update(int employeeId, [FromBody]check_yo_self_api.Server.Entities.Employee employee)
     {
       if (!ModelState.IsValid)
       {

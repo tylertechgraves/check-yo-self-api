@@ -20,5 +20,6 @@ namespace check_yo_self_api.Server.Entities.Config
         public string Version { get; set; }
         public ConfigurationServer ConfigurationServer { get; set; }
         public TokenValidation TokenValidation { get; set; }
+        public string IndexerBaseUri { get; set; }
     }
 }
