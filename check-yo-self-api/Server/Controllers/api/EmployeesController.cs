@@ -318,5 +318,26 @@ namespace check_yo_self_api.Server.Controllers.api
         }
       }
     }
+
+    [HttpPost("ReindexAllEmployees")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> ReindexAllEmployees()
+    {      
+      try
+      {
+        // Load all employees in the database
+        // Delete the existing index
+        // Recreate the employees index
+        // Index the loaded employees
+
+        return Ok();
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(1, ex, "Unable to re-index all employee records");
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+    }
   }
 }
