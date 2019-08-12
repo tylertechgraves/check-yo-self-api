@@ -56,7 +56,7 @@ namespace check_yo_self_api
                     config.Title = title;
                 })
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
-                .AddSingleton<IHttpClientAccessor, DefaultHttpClientAccessor>()
+                .AddHttpClient()
                 .AddNodeServices(); // added last because it returns void and breaks the fluent API
 
             //Setup token validation method
