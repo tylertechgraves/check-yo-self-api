@@ -184,6 +184,9 @@
           "400": {
             "description": ""
           },
+          "404": {
+            "description": ""
+          },
           "500": {
             "description": ""
           }

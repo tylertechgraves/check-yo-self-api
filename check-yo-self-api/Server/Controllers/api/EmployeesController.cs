@@ -242,6 +242,7 @@ namespace check_yo_self_api.Server.Controllers.api
     [HttpPut("{employeeId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update(int employeeId, [FromBody]Employee employee)
     {
@@ -256,7 +257,18 @@ namespace check_yo_self_api.Server.Controllers.api
           if (employeeId != employee.EmployeeId)
             return BadRequest();
 
-          _context.Entry(employee).State = EntityState.Modified;
+          var foundEmployee = _context.Employees.Find(employeeId);
+
+          if (foundEmployee == null)
+            return NotFound();
+
+          foundEmployee.EmployeeId = employee.EmployeeId;
+          foundEmployee.FirstName = employee.FirstName;
+          foundEmployee.LastName = employee.LastName;
+          foundEmployee.Salary = employee.Salary;
+          foundEmployee.FirstPaycheckDate = employee.FirstPaycheckDate;
+
+          _context.Entry(foundEmployee).State = EntityState.Modified;
 
           await _context.SaveChangesAsync();
 

@@ -18,3 +18,8 @@ services:
     image: check-yo-self-indexer:1.0.1
     ports:
       - 5002:80
+
+networks:
+  default:
+    external:
+      name: platform
