@@ -7,17 +7,28 @@ services:
       - 5000:80
     environment:
       - CheckYoSelf__employeesApiBaseUrl=http://check-yo-self-api/
-      - CheckYoSelf__employeesButtonVisible=false
+      - CheckYoSelf__employeesButtonVisible=true
 
   check-yo-self-api:
-    image: check-yo-self-api:1.0.1
+    image: check-yo-self-api:1.0.0
     ports:
       - 5001:80
+    environment:
+      - IndexerBaseUri=http://check-yo-self-indexer/
 
   check-yo-self-indexer:
-    image: check-yo-self-indexer:1.0.1
+    image: check-yo-self-indexer:1.0.0
     ports:
       - 5002:80
+    environment: 
+      - Elasticsearch__uri=http://elasticsearch:9200
+      - Elasticsearch__username=elastic
+      - Elasticsearch__password=ElasticAdmin1
+      - Elasticsearch__indexName=employees
+      - Elasticsearch__maxBulkInsertCount=100
+      - Elasticsearch__numberOfReplicas=1
+      - Elasticsearch__numberOfShards=5
+      - Elasticsearch__useAuthentication=false
 
 networks:
   default:
