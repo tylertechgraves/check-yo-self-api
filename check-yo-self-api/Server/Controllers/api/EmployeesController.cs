@@ -37,25 +37,17 @@ namespace check_yo_self_api.Server.Controllers.api
     [HttpGet]
     [ProducesResponseType(typeof(List<check_yo_self_api.Server.Entities.Employee>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAll()
     {
-      if (!ModelState.IsValid)
+      try
       {
-        return BadRequest();
+        var employees = await _context.Employees.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToAsyncEnumerable().ToList();
+        return Ok(employees);
       }
-      else
+      catch (Exception ex)
       {
-        try
-        {
-          var employees = await _context.Employees.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToAsyncEnumerable().ToList();
-          return Ok(employees);
-        }
-        catch (Exception ex)
-        {
-          _logger.LogError(1, ex, "Unable to get all employees");
-          return StatusCode(StatusCodes.Status500InternalServerError);
-        }
+        _logger.LogError(1, ex, "Unable to get all employees");
+        return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }
 
