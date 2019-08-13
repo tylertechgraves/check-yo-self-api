@@ -59,6 +59,8 @@ namespace check_yo_self_api
                 .AddHttpClient()
                 .AddNodeServices(); // added last because it returns void and breaks the fluent API
 
+            services.AddHealthChecks();
+
             //Setup token validation method
             ConfigureTokenValidation(services);
         }
@@ -73,6 +75,8 @@ namespace check_yo_self_api
             {
                 app.AddDevMiddlewares();
             }
+
+            app.UseHealthChecks("/health");
 
             var provider = new FileExtensionContentTypeProvider();
             provider.Mappings[".po"] = "text/plain";
