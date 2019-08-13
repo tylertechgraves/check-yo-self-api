@@ -5,6 +5,6 @@ Write-Host "Script has changed location to: " $(Get-Location)
 
 dotnet publish -c Release ../check-yo-self-api/check-yo-self-api.csproj -r linux-musl-x64
 dotnet publish -c Release ./check-yo-self-api-sdk.csproj -o ./out
-dotnet pack ./check-yo-self-api-sdk.csproj /p:PackageVersion=1.0.6-beta --configuration Debug --include-source --include-symbols --output ./nupkg --version-suffix "beta"
+dotnet pack ./check-yo-self-api-sdk.csproj /p:PackageVersion=1.0.7-beta --configuration Debug --include-source --include-symbols --output ./nupkg --version-suffix "beta"
 
 Pop-Location

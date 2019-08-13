@@ -543,7 +543,7 @@ namespace check_yo_self_api_client
         public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByLastNameAsync(string lastName, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/QueryByLastName/{lastName}");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/GetByLastName/{lastName}");
             urlBuilder_.Replace("{lastName}", System.Uri.EscapeDataString(ConvertToString(lastName, System.Globalization.CultureInfo.InvariantCulture)));
     
             var client_ = _httpClient;
@@ -621,7 +621,7 @@ namespace check_yo_self_api_client
         public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFirstNameAsync(string firstName, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/QueryByFirstName/{firstName}");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/GetByFirstName/{firstName}");
             urlBuilder_.Replace("{firstName}", System.Uri.EscapeDataString(ConvertToString(firstName, System.Globalization.CultureInfo.InvariantCulture)));
     
             var client_ = _httpClient;
@@ -689,17 +689,17 @@ namespace check_yo_self_api_client
         }
     
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> QueryByFullNameAsync(string firstName, string lastName)
+        public System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFullNameAsync(string firstName, string lastName)
         {
-            return QueryByFullNameAsync(firstName, lastName, System.Threading.CancellationToken.None);
+            return GetByFullNameAsync(firstName, lastName, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> QueryByFullNameAsync(string firstName, string lastName, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFullNameAsync(string firstName, string lastName, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/QueryByFullName/{firstName}/{lastName}");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/GetByFullName/{firstName}/{lastName}");
             urlBuilder_.Replace("{firstName}", System.Uri.EscapeDataString(ConvertToString(firstName, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{lastName}", System.Uri.EscapeDataString(ConvertToString(lastName, System.Globalization.CultureInfo.InvariantCulture)));
     

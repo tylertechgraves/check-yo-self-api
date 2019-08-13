@@ -112,7 +112,7 @@ namespace check_yo_self_api.Server.Controllers.api
       }
     }
 
-    [HttpGet("QueryByLastName/{lastName}")]
+    [HttpGet("GetByLastName/{lastName}")]
     [ProducesResponseType(typeof(List<check_yo_self_api.Server.Entities.Employee>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -137,7 +137,7 @@ namespace check_yo_self_api.Server.Controllers.api
       }
     }
 
-    [HttpGet("QueryByFirstName/{firstName}")]
+    [HttpGet("GetByFirstName/{firstName}")]
     [ProducesResponseType(typeof(List<check_yo_self_api.Server.Entities.Employee>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -162,12 +162,12 @@ namespace check_yo_self_api.Server.Controllers.api
       }
     }
 
-    [HttpGet("QueryByFullName/{firstName}/{lastName}")]
+    [HttpGet("GetByFullName/{firstName}/{lastName}")]
     [ProducesResponseType(typeof(List<check_yo_self_api.Server.Entities.Employee>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> QueryByFullName(string firstName, string lastName)
+    public async Task<IActionResult> GetByFullName(string firstName, string lastName)
     {
       if (!ModelState.IsValid)
       {

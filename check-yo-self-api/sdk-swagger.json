@@ -234,7 +234,7 @@
         }
       }
     },
-    "/api/Employees/QueryByLastName/{lastName}": {
+    "/api/Employees/GetByLastName/{lastName}": {
       "get": {
         "tags": [
           "Employees"
@@ -274,7 +274,7 @@
         }
       }
     },
-    "/api/Employees/QueryByFirstName/{firstName}": {
+    "/api/Employees/GetByFirstName/{firstName}": {
       "get": {
         "tags": [
           "Employees"
@@ -314,12 +314,12 @@
         }
       }
     },
-    "/api/Employees/QueryByFullName/{firstName}/{lastName}": {
+    "/api/Employees/GetByFullName/{firstName}/{lastName}": {
       "get": {
         "tags": [
           "Employees"
         ],
-        "operationId": "Employees_QueryByFullName",
+        "operationId": "Employees_GetByFullName",
         "produces": [
           "text/plain",
           "application/json",
