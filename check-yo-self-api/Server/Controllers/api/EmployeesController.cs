@@ -211,48 +211,6 @@ namespace check_yo_self_api.Server.Controllers.api
       }
     }
 
-    [HttpDelete("{employeeId}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Delete(int employeeId)
-    {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest();
-      }
-      else
-      {
-        try
-        {
-          var employee = await _context.Employees.FindAsync(employeeId);
-
-          if (employee == null)
-            return NotFound();
-
-          _context.Employees.Remove(employee);
-          await _context.SaveChangesAsync();
-
-          // Remove deleted item from the index
-          try
-          {
-            await _indexerClient.DeleteAsync(employeeId);
-            return NoContent();
-          }
-          catch(SwaggerException swaggerException)
-          {
-            return StatusCode(swaggerException.StatusCode);
-          }
-        }
-        catch (Exception ex)
-        {
-          _logger.LogError(1, ex, "Unable to delete the specified employee with id: " + employeeId);
-          return StatusCode(StatusCodes.Status500InternalServerError);
-        }
-      }
-    }
-
     [HttpPut("{employeeId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -336,6 +294,16 @@ namespace check_yo_self_api.Server.Controllers.api
 
     private async Task<int> IndexEmployee (check_yo_self_api.Server.Entities.Employee employee)
     {
+      // Delete the existing entry
+      try
+      {
+        await _indexerClient.DeleteAsync(employee.EmployeeId);
+      }
+      catch
+      {
+        // We don't care of the delete fails.
+      }
+
       var clientEmployee = employee.Adapt<check_yo_self_indexer_client.Employee>();
       var clientList = new List<check_yo_self_indexer_client.Employee>()
       {
