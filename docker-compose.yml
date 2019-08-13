@@ -8,13 +8,17 @@ services:
     environment:
       - CheckYoSelf__employeesApiBaseUrl=http://check-yo-self-api/
       - CheckYoSelf__employeesButtonVisible=true
+    depends_on: 
+      - check-yo-self-api
 
   check-yo-self-api:
-    image: check-yo-self-api:1.0.0
+    image: check-yo-self-api:1.0.1
     ports:
       - 5001:80
     environment:
       - IndexerBaseUri=http://check-yo-self-indexer/
+    depends_on: 
+      - check-yo-self-indexer
 
   check-yo-self-indexer:
     image: check-yo-self-indexer:1.0.0
@@ -29,6 +33,13 @@ services:
       - Elasticsearch__numberOfReplicas=1
       - Elasticsearch__numberOfShards=5
       - Elasticsearch__useAuthentication=false
+
+  check-yo-self-bootstrapper:
+    image: check-yo-self-bootstrapper:1.0.3
+    environment: 
+      - APICONTAINER=check-yo-self-api
+    depends_on: 
+      - check-yo-self-api
 
 networks:
   default:

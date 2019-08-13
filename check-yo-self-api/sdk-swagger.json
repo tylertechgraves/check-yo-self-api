@@ -364,6 +364,22 @@
         }
       }
     },
+    "/api/Employees/ReindexAllEmployees": {
+      "post": {
+        "tags": [
+          "Employees"
+        ],
+        "operationId": "Employees_ReindexAllEmployees",
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/GettingStarted": {
       "get": {
         "tags": [
