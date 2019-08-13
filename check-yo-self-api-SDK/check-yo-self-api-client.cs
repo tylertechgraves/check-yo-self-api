@@ -95,12 +95,6 @@ namespace check_yo_self_api_client
                             throw new SwaggerException("A server side error occurred.", (int)response_.StatusCode, responseText_, headers_, null);
                         }
                         else
-                        if (status_ == "400") 
-                        {
-                            string responseText_ = ( response_.Content == null ) ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("A server side error occurred.", (int)response_.StatusCode, responseText_, headers_, null);
-                        }
-                        else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false); 
@@ -452,87 +446,6 @@ namespace check_yo_self_api_client
         }
     
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetBySalaryAsync(decimal salary)
-        {
-            return GetBySalaryAsync(salary, System.Threading.CancellationToken.None);
-        }
-    
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetBySalaryAsync(decimal salary, System.Threading.CancellationToken cancellationToken)
-        {
-            if (salary == null)
-                throw new System.ArgumentNullException("salary");
-    
-            var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/SalaryGreaterEqualTo/{salary}");
-            urlBuilder_.Replace("{salary}", System.Uri.EscapeDataString(ConvertToString(salary, System.Globalization.CultureInfo.InvariantCulture)));
-    
-            var client_ = _httpClient;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-    
-                    PrepareRequest(client_, request_, urlBuilder_);
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-                    PrepareRequest(client_, request_, url_);
-    
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
-                    {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-    
-                        ProcessResponse(client_, response_);
-    
-                        var status_ = ((int)response_.StatusCode).ToString();
-                        if (status_ == "200") 
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IEnumerable<Employee>>(response_, headers_).ConfigureAwait(false);
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == "500") 
-                        {
-                            string responseText_ = ( response_.Content == null ) ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("A server side error occurred.", (int)response_.StatusCode, responseText_, headers_, null);
-                        }
-                        else
-                        if (status_ == "400") 
-                        {
-                            string responseText_ = ( response_.Content == null ) ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("A server side error occurred.", (int)response_.StatusCode, responseText_, headers_, null);
-                        }
-                        else
-                        if (status_ != "200" && status_ != "204")
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false); 
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
-                        }
-            
-                        return default(System.Collections.Generic.IEnumerable<Employee>);
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-            }
-        }
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
         public System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByLastNameAsync(string lastName)
         {
             return GetByLastNameAsync(lastName, System.Threading.CancellationToken.None);
@@ -545,84 +458,6 @@ namespace check_yo_self_api_client
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/GetByLastName/{lastName}");
             urlBuilder_.Replace("{lastName}", System.Uri.EscapeDataString(ConvertToString(lastName, System.Globalization.CultureInfo.InvariantCulture)));
-    
-            var client_ = _httpClient;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-    
-                    PrepareRequest(client_, request_, urlBuilder_);
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-                    PrepareRequest(client_, request_, url_);
-    
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
-                    {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-    
-                        ProcessResponse(client_, response_);
-    
-                        var status_ = ((int)response_.StatusCode).ToString();
-                        if (status_ == "200") 
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IEnumerable<Employee>>(response_, headers_).ConfigureAwait(false);
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == "500") 
-                        {
-                            string responseText_ = ( response_.Content == null ) ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("A server side error occurred.", (int)response_.StatusCode, responseText_, headers_, null);
-                        }
-                        else
-                        if (status_ == "400") 
-                        {
-                            string responseText_ = ( response_.Content == null ) ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("A server side error occurred.", (int)response_.StatusCode, responseText_, headers_, null);
-                        }
-                        else
-                        if (status_ != "200" && status_ != "204")
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false); 
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
-                        }
-            
-                        return default(System.Collections.Generic.IEnumerable<Employee>);
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-            }
-        }
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFirstNameAsync(string firstName)
-        {
-            return GetByFirstNameAsync(firstName, System.Threading.CancellationToken.None);
-        }
-    
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFirstNameAsync(string firstName, System.Threading.CancellationToken cancellationToken)
-        {
-            var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/GetByFirstName/{firstName}");
-            urlBuilder_.Replace("{firstName}", System.Uri.EscapeDataString(ConvertToString(firstName, System.Globalization.CultureInfo.InvariantCulture)));
     
             var client_ = _httpClient;
             try

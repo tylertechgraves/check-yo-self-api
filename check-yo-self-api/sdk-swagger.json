@@ -30,9 +30,6 @@
           },
           "500": {
             "description": ""
-          },
-          "400": {
-            "description": ""
           }
         }
       },
@@ -193,47 +190,6 @@
         }
       }
     },
-    "/api/Employees/SalaryGreaterEqualTo/{salary}": {
-      "get": {
-        "tags": [
-          "Employees"
-        ],
-        "operationId": "Employees_GetBySalary",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "type": "number",
-            "name": "salary",
-            "in": "path",
-            "required": true,
-            "format": "decimal",
-            "x-nullable": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Employee"
-              }
-            }
-          },
-          "500": {
-            "description": ""
-          },
-          "400": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/api/Employees/GetByLastName/{lastName}": {
       "get": {
         "tags": [
@@ -249,46 +205,6 @@
           {
             "type": "string",
             "name": "lastName",
-            "in": "path",
-            "required": true,
-            "x-nullable": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Employee"
-              }
-            }
-          },
-          "500": {
-            "description": ""
-          },
-          "400": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/Employees/GetByFirstName/{firstName}": {
-      "get": {
-        "tags": [
-          "Employees"
-        ],
-        "operationId": "Employees_GetByFirstName",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "type": "string",
-            "name": "firstName",
             "in": "path",
             "required": true,
             "x-nullable": true
