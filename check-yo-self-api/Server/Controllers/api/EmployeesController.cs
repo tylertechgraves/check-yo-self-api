@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using check_yo_self_api.Server.Entities;
 using check_yo_self_api.Server.Entities.Config;
 using check_yo_self_indexer_client;
 using Mapster;
@@ -21,10 +20,11 @@ namespace check_yo_self_api.Server.Controllers.api
   public class EmployeesController : BaseController
   {
     private readonly ApplicationDbContext _context;
-
     private readonly ILogger _logger;
     private readonly AppConfig _appConfig;
     private readonly HttpClient _httpClient;
+    private EmployeesClient _indexerClient;
+    private IndexManagementClient _indexMgmtClient;
 
     public EmployeesController(IOptionsSnapshot<AppConfig> appConfig, ApplicationDbContext context, ILoggerFactory loggerFactory, IHttpClientFactory httpClientFactory)
     {
@@ -32,6 +32,8 @@ namespace check_yo_self_api.Server.Controllers.api
       _logger = loggerFactory.CreateLogger<EmployeesController>();
       _appConfig = appConfig.Value;
       _httpClient = httpClientFactory.CreateClient();
+      _indexerClient = new check_yo_self_indexer_client.EmployeesClient(_appConfig.IndexerBaseUri, _httpClient);
+      _indexMgmtClient = new check_yo_self_indexer_client.IndexManagementClient(_appConfig.IndexerBaseUri, _httpClient);
     }
 
     [HttpGet]
@@ -39,9 +41,21 @@ namespace check_yo_self_api.Server.Controllers.api
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAll()
     {
+      IEnumerable<check_yo_self_indexer_client.Employee> clientEmployees;
+
       try
       {
-        var employees = await _context.Employees.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToAsyncEnumerable().ToList();
+        try
+        {
+          clientEmployees = await _indexerClient.GetAllAsync();
+        }
+        catch(SwaggerException swaggerException)
+        {
+          return StatusCode(swaggerException.StatusCode);
+        }
+
+        var employees = clientEmployees.Adapt<List<check_yo_self_api.Server.Entities.Employee>>();
+
         return Ok(employees);
       }
       catch (Exception ex)
@@ -57,6 +71,8 @@ namespace check_yo_self_api.Server.Controllers.api
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetById(int employeeId)
     {
+      check_yo_self_indexer_client.Employee clientEmployee;
+
       if (!ModelState.IsValid)
       {
         return BadRequest();
@@ -65,40 +81,21 @@ namespace check_yo_self_api.Server.Controllers.api
       {
         try
         {
-          var employee = await _context.Employees.FindAsync(employeeId);
+          try
+          {
+            clientEmployee = await _indexerClient.GetByIdAsync(employeeId);
+          }
+          catch(SwaggerException swaggerException)
+          {
+            return StatusCode(swaggerException.StatusCode);
+          }
+
+          var employee = clientEmployee.Adapt<check_yo_self_api.Server.Entities.Employee>();
           return Ok(employee);
         }
         catch (Exception ex)
         {
           _logger.LogError(1, ex, "Unable to get employee by id");
-          return StatusCode(StatusCodes.Status500InternalServerError);
-        }
-      }
-    }
-
-    [HttpGet("SalaryGreaterEqualTo/{salary:decimal}")]
-    [ProducesResponseType(typeof(List<check_yo_self_api.Server.Entities.Employee>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetBySalary(decimal salary)
-    {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest();
-      }
-      else
-      {
-        try
-        {
-          // Because Sqlite does not support the decimal data type,
-          // we run an explicit conversion on the TEXT value that's coming back from Sqllite
-          // in order to ensure we're going a decimal comparison instead of a text comparison.
-          var employees = await _context.Employees.Where(e => Convert.ToDecimal(e.Salary) >= salary).ToAsyncEnumerable().ToList();
-          return Ok(employees);
-        }
-        catch (Exception ex)
-        {
-          _logger.LogError(1, ex, "Unable to query employees by salary");
           return StatusCode(StatusCodes.Status500InternalServerError);
         }
       }
@@ -110,6 +107,8 @@ namespace check_yo_self_api.Server.Controllers.api
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetByLastName(string lastName)
     {
+      IEnumerable<check_yo_self_indexer_client.Employee> clientEmployees;
+
       if (!ModelState.IsValid)
       {
         return BadRequest();
@@ -118,37 +117,21 @@ namespace check_yo_self_api.Server.Controllers.api
       {
         try
         {
-          var employees = await _context.Employees.Where(e => e.LastName.ToLower() == lastName.ToLower()).ToAsyncEnumerable().ToList();
+          try
+          {
+            clientEmployees = await _indexerClient.GetByLastNameAsync(lastName);
+          }
+          catch(SwaggerException swaggerException)
+          {
+            return StatusCode(swaggerException.StatusCode);
+          }
+
+          var employees = clientEmployees.Adapt<List<check_yo_self_indexer_client.Employee>>();
           return Ok(employees);
         }
         catch (Exception ex)
         {
           _logger.LogError(1, ex, "Unable to get query employees by last name");
-          return StatusCode(StatusCodes.Status500InternalServerError);
-        }
-      }
-    }
-
-    [HttpGet("GetByFirstName/{firstName}")]
-    [ProducesResponseType(typeof(List<check_yo_self_api.Server.Entities.Employee>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetByFirstName(string firstName)
-    {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest();
-      }
-      else
-      {
-        try
-        {
-          var employees = await _context.Employees.Where(e => e.FirstName.ToLower() == firstName.ToLower()).ToAsyncEnumerable().ToList();
-          return Ok(employees);
-        }
-        catch (Exception ex)
-        {
-          _logger.LogError(1, ex, "Unable to query employees by first name");
           return StatusCode(StatusCodes.Status500InternalServerError);
         }
       }
@@ -161,6 +144,8 @@ namespace check_yo_self_api.Server.Controllers.api
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetByFullName(string firstName, string lastName)
     {
+      IEnumerable<check_yo_self_indexer_client.Employee> clientEmployees;
+
       if (!ModelState.IsValid)
       {
         return BadRequest();
@@ -169,8 +154,16 @@ namespace check_yo_self_api.Server.Controllers.api
       {
         try
         {
-          var employees = await _context.Employees.Where(e => e.FirstName.ToLower() == firstName.ToLower() && e.LastName.ToLower() == lastName.ToLower()).ToAsyncEnumerable().ToList();
+          try
+          {
+            clientEmployees = await _indexerClient.GetByFirstAndLastNameAsync(firstName, lastName);
+          }
+          catch(SwaggerException swaggerException)
+          {
+            return StatusCode(swaggerException.StatusCode);
+          }
 
+          var employees = clientEmployees.Adapt<List<check_yo_self_indexer_client.Employee>>();
           return Ok(employees);
         }
         catch (Exception ex)
@@ -242,11 +235,9 @@ namespace check_yo_self_api.Server.Controllers.api
           await _context.SaveChangesAsync();
 
           // Remove deleted item from the index
-          var indexerClient = new check_yo_self_indexer_client.EmployeesClient(_appConfig.IndexerBaseUri, _httpClient);
-          
           try
           {
-            await indexerClient.DeleteAsync(employeeId);
+            await _indexerClient.DeleteAsync(employeeId);
             return NoContent();
           }
           catch(SwaggerException swaggerException)
@@ -326,11 +317,10 @@ namespace check_yo_self_api.Server.Controllers.api
         var employees = await _context.Employees.ToListAsync();
 
         // Delete the existing index
-        var indexMgmtClient = new check_yo_self_indexer_client.IndexManagementClient(_appConfig.IndexerBaseUri, _httpClient);
-        await indexMgmtClient.DeleteAsync();
+        await _indexMgmtClient.DeleteAsync();
 
         // Recreate the employees index
-        await indexMgmtClient.PostAsync();
+        await _indexMgmtClient.PostAsync();
 
         // Index the loaded employees
         await IndexEmployees(employees);
@@ -346,7 +336,6 @@ namespace check_yo_self_api.Server.Controllers.api
 
     private async Task<int> IndexEmployee (check_yo_self_api.Server.Entities.Employee employee)
     {
-      var indexerClient = new check_yo_self_indexer_client.EmployeesClient(_appConfig.IndexerBaseUri, _httpClient);
       var clientEmployee = employee.Adapt<check_yo_self_indexer_client.Employee>();
       var clientList = new List<check_yo_self_indexer_client.Employee>()
       {
@@ -355,7 +344,7 @@ namespace check_yo_self_api.Server.Controllers.api
 
       try 
       {
-        await indexerClient.BulkPostAsync(clientList);
+        await _indexerClient.BulkPostAsync(clientList);
         return 0;
       }
       catch(SwaggerException swaggerException)
@@ -366,13 +355,11 @@ namespace check_yo_self_api.Server.Controllers.api
 
     private async Task<int> IndexEmployees (List<check_yo_self_api.Server.Entities.Employee> employees)
     {
-      var indexerClient = new check_yo_self_indexer_client.EmployeesClient(_appConfig.IndexerBaseUri, _httpClient);
-
       var clientEmployees = employees.Adapt<List<check_yo_self_indexer_client.Employee>>();
 
       try 
       {
-        await indexerClient.BulkPostAsync(clientEmployees);
+        await _indexerClient.BulkPostAsync(clientEmployees);
         return 0;
       }
       catch(SwaggerException swaggerException)
