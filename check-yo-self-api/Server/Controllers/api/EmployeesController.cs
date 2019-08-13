@@ -207,21 +207,15 @@ namespace check_yo_self_api.Server.Controllers.api
           await _context.SaveChangesAsync();
 
           // Index the newly-added employee
-          var indexerClient = new check_yo_self_indexer_client.EmployeesClient(_appConfig.IndexerBaseUri, _httpClient);
-          var clientEmployee = employee.Adapt<check_yo_self_indexer_client.Employee>();
-          var clientList = new List<check_yo_self_indexer_client.Employee>()
+          int result = await IndexEmployee(employee);
+          
+          if (result == 0)
           {
-            clientEmployee
-          };
-
-          try 
-          {
-            await indexerClient.BulkPostAsync(clientList);
             return Created("/api/Employees", employee);
           }
-          catch(SwaggerException swaggerException)
+          else
           {
-            return StatusCode(swaggerException.StatusCode);
+            return StatusCode(result);
           }
         }
         catch (Exception ex)
@@ -309,7 +303,17 @@ namespace check_yo_self_api.Server.Controllers.api
 
           await _context.SaveChangesAsync();
 
-          return NoContent();
+          // Reindex the updated item
+          int result = await IndexEmployee(employee);
+          
+          if (result == 0)
+          {
+            return NoContent();
+          }
+          else
+          {
+            return StatusCode(result);
+          }
         }
         catch (Exception ex)
         {
@@ -327,9 +331,17 @@ namespace check_yo_self_api.Server.Controllers.api
       try
       {
         // Load all employees in the database
+        var employees = await _context.Employees.ToListAsync();
+
         // Delete the existing index
+        var indexMgmtClient = new check_yo_self_indexer_client.IndexManagementClient(_appConfig.IndexerBaseUri, _httpClient);
+        await indexMgmtClient.DeleteAsync();
+
         // Recreate the employees index
+        await indexMgmtClient.PostAsync();
+
         // Index the loaded employees
+        await IndexEmployees(employees);
 
         return Ok();
       }
@@ -337,6 +349,43 @@ namespace check_yo_self_api.Server.Controllers.api
       {
         _logger.LogError(1, ex, "Unable to re-index all employee records");
         return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+    }
+
+    private async Task<int> IndexEmployee (check_yo_self_api.Server.Entities.Employee employee)
+    {
+      var indexerClient = new check_yo_self_indexer_client.EmployeesClient(_appConfig.IndexerBaseUri, _httpClient);
+      var clientEmployee = employee.Adapt<check_yo_self_indexer_client.Employee>();
+      var clientList = new List<check_yo_self_indexer_client.Employee>()
+      {
+        clientEmployee
+      };
+
+      try 
+      {
+        await indexerClient.BulkPostAsync(clientList);
+        return 0;
+      }
+      catch(SwaggerException swaggerException)
+      {
+        return swaggerException.StatusCode;
+      }
+    }
+
+    private async Task<int> IndexEmployees (List<check_yo_self_api.Server.Entities.Employee> employees)
+    {
+      var indexerClient = new check_yo_self_indexer_client.EmployeesClient(_appConfig.IndexerBaseUri, _httpClient);
+
+      var clientEmployees = employees.Adapt<List<check_yo_self_indexer_client.Employee>>();
+
+      try 
+      {
+        await indexerClient.BulkPostAsync(clientEmployees);
+        return 0;
+      }
+      catch(SwaggerException swaggerException)
+      {
+        return swaggerException.StatusCode;
       }
     }
   }
