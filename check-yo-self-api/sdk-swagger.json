@@ -114,36 +114,6 @@
           }
         }
       },
-      "delete": {
-        "tags": [
-          "Employees"
-        ],
-        "operationId": "Employees_Delete",
-        "parameters": [
-          {
-            "type": "integer",
-            "name": "employeeId",
-            "in": "path",
-            "required": true,
-            "format": "int32",
-            "x-nullable": false
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          },
-          "500": {
-            "description": ""
-          },
-          "400": {
-            "description": ""
-          }
-        }
-      },
       "put": {
         "tags": [
           "Employees"
