@@ -12,7 +12,7 @@ services:
       - check-yo-self-api
 
   check-yo-self-api:
-    image: check-yo-self-api:1.0.3
+    image: check-yo-self-api:1.0.4
     ports:
       - 5001:80
     environment:
@@ -23,7 +23,7 @@ services:
       - check-yo-self-indexer
 
   check-yo-self-indexer:
-    image: check-yo-self-indexer:1.0.0
+    image: check-yo-self-indexer:1.0.1
     ports:
       - 5002:80
     environment: 
