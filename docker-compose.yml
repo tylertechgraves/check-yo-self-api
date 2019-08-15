@@ -19,6 +19,7 @@ services:
       - IndexerBaseUri=http://check-yo-self-indexer/
       - Data__DatabaseDriver=MySql
       - Data__MySql__ConnectionString=Server=db;Port=3306;Database=employees;Uid=root;Pwd=checkyoself
+      - ASPNETCORE_ENVIRONMENT=Development
     depends_on: 
       - check-yo-self-indexer
 
@@ -35,6 +36,7 @@ services:
       - Elasticsearch__numberOfReplicas=1
       - Elasticsearch__numberOfShards=5
       - Elasticsearch__useAuthentication=false
+      - ASPNETCORE_ENVIRONMENT=Development
 
   check-yo-self-bootstrapper:
     image: check-yo-self-bootstrapper:1.0.0
