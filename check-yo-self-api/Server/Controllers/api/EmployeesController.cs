@@ -32,8 +32,8 @@ namespace check_yo_self_api.Server.Controllers.api
       _logger = loggerFactory.CreateLogger<EmployeesController>();
       _appConfig = appConfig.Value;
       _httpClient = httpClientFactory.CreateClient();
-      _indexerClient = new check_yo_self_indexer_client.EmployeesClient(_appConfig.IndexerBaseUri, _httpClient);
-      _indexMgmtClient = new check_yo_self_indexer_client.IndexManagementClient(_appConfig.IndexerBaseUri, _httpClient);
+      _indexerClient = new check_yo_self_indexer_client.EmployeesClient(_appConfig.CheckYoSelf.IndexerBaseUri, _httpClient);
+      _indexMgmtClient = new check_yo_self_indexer_client.IndexManagementClient(_appConfig.CheckYoSelf.IndexerBaseUri, _httpClient);
     }
 
     [HttpGet]
