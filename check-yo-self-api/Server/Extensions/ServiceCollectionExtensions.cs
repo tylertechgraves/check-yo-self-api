@@ -24,7 +24,7 @@ namespace check_yo_self_api.Server.Extensions
             {
                 options.Filters.Add(typeof(ModelValidationFilter));
             })
-            .AddJsonOptions(options =>
+            .AddNewtonsoftJson(options =>             
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });

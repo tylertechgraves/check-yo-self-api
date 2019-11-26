@@ -10,6 +10,7 @@ using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 
 namespace check_yo_self_api
 {
@@ -17,7 +18,7 @@ namespace check_yo_self_api
     {
         static string title = "check-yo-self-api";
         
-        public Startup(IConfiguration configuration, IHostingEnvironment env, ILogger<Startup> logger)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             Configuration = configuration;
             _env = env;
@@ -25,7 +26,7 @@ namespace check_yo_self_api
         }
 
         public IConfiguration Configuration { get; set; }
-        private IHostingEnvironment _env { get; set; }
+        private IWebHostEnvironment _env { get; set; }
         private readonly ILogger<Startup> _logger;
 
 
@@ -40,8 +41,7 @@ namespace check_yo_self_api
                     options.AddPolicy("AllowAll",
                     builder => builder.AllowAnyOrigin()
                       .AllowAnyHeader()
-                      .AllowAnyMethod()
-                      .AllowCredentials());
+                      .AllowAnyMethod());
                 })
                 .AddResponseCompression(options =>
                 {
@@ -56,8 +56,7 @@ namespace check_yo_self_api
                     config.Title = title;
                 })
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
-                .AddHttpClient()
-                .AddNodeServices(); // added last because it returns void and breaks the fluent API
+                .AddHttpClient();
 
             services.AddHealthChecks();
 
@@ -65,7 +64,7 @@ namespace check_yo_self_api
             ConfigureTokenValidation(services);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime appLifetime)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime appLifetime)
         {
             if (env.IsProduction())
             {
@@ -85,16 +84,27 @@ namespace check_yo_self_api
                 .UseXsrf()
                 .UseCors("AllowAll")
                 .UseStaticFiles()
+                .UseRouting()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}"
+                    );
+                    // default route for MVC/API controllers
+                    // endpoints.MapRoute(
+                    //     name: "default",
+                    //     template: "{controller=Home}/{action=Index}/{id?}");
+
+                    // // fallback route for anything that does not match an MVC/API controller
+                    // // this will load the angular app and allow for the angular routes to work.
+                    // routes.MapSpaFallbackRoute(
+                    //     name: "spa-fallback",
+                    //     defaults: new { controller = "Home", action = "Index" });
+                })
                 .UseAuthentication()
                 // Enable middleware to serve generated Swagger as a JSON endpoint
-                .UseOpenApi()
-                .UseMvc(routes =>
-                {
-                    // default route for MVC/API controllers
-                    routes.MapRoute(
-                        name: "default",
-                        template: "{controller=Home}/{action=Index}/{id?}");
-                });
+                .UseOpenApi();
 
             IHttpContextAccessor httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
             Context.Configure(httpContextAccessor);

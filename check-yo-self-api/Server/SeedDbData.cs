@@ -11,12 +11,12 @@ namespace check_yo_self_api.Server
     public class SeedDbData
     {
         readonly ApplicationDbContext _context;
-        private readonly IHostingEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _hostingEnv;
         public SeedDbData(IWebHost host, ApplicationDbContext context)
         {
             var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
             var serviceScope = services.CreateScope();
-            _hostingEnv = serviceScope.ServiceProvider.GetService<IHostingEnvironment>();
+            _hostingEnv = serviceScope.ServiceProvider.GetService<IWebHostEnvironment>();
             _context = context;
         }
     }

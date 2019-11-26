@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
+using Microsoft.Extensions.Hosting;
 
 //Generated on 03/04/2019 with Ecstatic Emu 1.0.6
 
