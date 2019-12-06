@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <DebugType>portable</DebugType>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <AssemblyName>check-yo-self-api</AssemblyName>
     <PackageId>check-yo-self-api</PackageId>
     <UserSecretsId>check-yo-self-api-a63f6e2b-a940-4bed-b412-51da01a0fd49</UserSecretsId>
-    <RuntimeFrameworkVersion>3.0.0</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion>3.1.0</RuntimeFrameworkVersion>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <version>1.0.0</version>
     <authors>Tyler Technologies</authors>
