@@ -85,6 +85,7 @@ namespace check_yo_self_api
                 .UseCors("AllowAll")
                 .UseStaticFiles()
                 .UseRouting()
+                .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllerRoute(
