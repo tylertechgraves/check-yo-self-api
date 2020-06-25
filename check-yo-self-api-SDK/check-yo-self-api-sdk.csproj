@@ -2,8 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <NuspecFile>.\nupkg\check-yo-self-api-sdk.nuspec</NuspecFile>
-    <NuspecProperties>version=$(PackageVersion)</NuspecProperties>
+    <PackageId>check-yo-self-api-sdk</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Title>SDK for check-yo-self-api in .NET Standard</Title>    
+    <Authors>Mark Graves</Authors>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Description>SDK for check-yo-self-api in .NET Standard NuGet Package</Description>
+    <Copyright>Please see MIT license provided by GitHub</Copyright>
+    <PackageTags>check-yo-self-api SDK API dotnet Core Standard Types .NET</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
