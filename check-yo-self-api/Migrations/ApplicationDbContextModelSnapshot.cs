@@ -14,24 +14,30 @@ namespace checkyoselfapi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("check_yo_self_api.Server.Entities.Employee", b =>
                 {
                     b.Property<int>("EmployeeId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasColumnType("varchar(1024) CHARACTER SET utf8mb4")
                         .HasMaxLength(1024);
 
-                    b.Property<DateTime>("FirstPaycheckDate");
+                    b.Property<DateTime>("FirstPaycheckDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasColumnType("varchar(1024) CHARACTER SET utf8mb4")
                         .HasMaxLength(1024);
 
-                    b.Property<decimal>("Salary");
+                    b.Property<decimal>("Salary")
+                        .HasColumnType("decimal(65,30)");
 
                     b.HasKey("EmployeeId");
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace checkyoselfapi.Migrations
@@ -12,7 +13,7 @@ namespace checkyoselfapi.Migrations
                 columns: table => new
                 {
                     EmployeeId = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     LastName = table.Column<string>(maxLength: 1024, nullable: false),
                     FirstName = table.Column<string>(maxLength: 1024, nullable: false),
                     Salary = table.Column<decimal>(nullable: false),

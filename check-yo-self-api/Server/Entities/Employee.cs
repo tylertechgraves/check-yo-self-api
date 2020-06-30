@@ -8,6 +8,7 @@ namespace check_yo_self_api.Server.Entities
   public class Employee
   {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int EmployeeId { get; set; }
     
     [Required]
