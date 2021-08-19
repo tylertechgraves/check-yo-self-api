@@ -224,6 +224,9 @@ _Pvt_Extensions/
 ModelManifest.xml
 /Properties/PublishProfiles/CustomProfile.pubxml
 
+# macos
+.DS_Store
+
 # PoEdit
 *.mo
 
