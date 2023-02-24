@@ -1,6 +1,5 @@
 ﻿using System;
 using check_yo_self_api.Server.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace check_yo_self_api.Server
@@ -8,9 +7,9 @@ namespace check_yo_self_api.Server
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Employee> Employees { get; set; }
-        
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        { 
+        {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -177,6 +176,6 @@ namespace check_yo_self_api.Server
                     FirstPaycheckDate = new DateTime(2019, 2, 22)
                 }
             );
-        }    
+        }
     }
 }

@@ -1,13 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <LangVersion>10.0</LangVersion>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <NuspecFile>.\nupkg\check-yo-self-api-sdk.nuspec</NuspecFile>
-    <NuspecProperties>version=$(PackageVersion)</NuspecProperties>
+    <PackageId>check-yo-self-api-sdk</PackageId>
+    <PackageVersion>$(PackageVersion)</PackageVersion>
+    <Title>SDK for check-yo-self-api in .NET Standard</Title>
+    <Authors>Mark Graves</Authors>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Description>SDK for check-yo-self-api in .NET Standard NuGet Package</Description>
+    <Copyright>Copyright © 2023 Mark Graves. All Rights Reserved Worldwide.</Copyright>
+    <PackageTags>check-yo-self-api SDK API dotnet Core Standard Types .NET</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

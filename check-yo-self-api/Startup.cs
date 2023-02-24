@@ -6,26 +6,28 @@ using check_yo_self_api.Server;
 using check_yo_self_api.Server.Startup;
 using check_yo_self_api.Server.Extensions;
 using check_yo_self_api.Server.Entities.Config;
-using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace check_yo_self_api
 {
     public class Startup
     {
-        static string title = "check-yo-self-api";
-        
-        public Startup(IConfiguration configuration, IHostingEnvironment env, ILogger<Startup> logger)
+        static readonly string _title = "check-yo-self-api";
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
-            _env = env;
             _logger = logger;
         }
 
         public IConfiguration Configuration { get; set; }
-        private IHostingEnvironment _env { get; set; }
         private readonly ILogger<Startup> _logger;
 
 
@@ -39,9 +41,8 @@ namespace check_yo_self_api
                 {
                     options.AddPolicy("AllowAll",
                     builder => builder.AllowAnyOrigin()
-                      .AllowAnyHeader()
-                      .AllowAnyMethod()
-                      .AllowCredentials());
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
                 })
                 .AddResponseCompression(options =>
                 {
@@ -50,22 +51,38 @@ namespace check_yo_self_api
                 .AddCustomDbContext(Configuration)
                 .AddMemoryCache()
                 .RegisterCustomServices()
-                .AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN")
                 .AddCustomizedMvc()
-                .AddSwaggerDocument(config => {
-                    config.Title = title;
-                })
-                .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+                .AddHttpContextAccessor()
                 .AddHttpClient()
-                .AddNodeServices(); // added last because it returns void and breaks the fluent API
+                .AddApiVersioning(o =>
+                {
+                    o.ReportApiVersions = true;
+                })
+                // To add another api version, just add to this list
+                .AddVersionedApiDocs(Configuration, _title, new List<string>() { "v1" })
+                .AddVersionedApiExplorer(options =>
+                {
+                    // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
+                    // note: the specified format code will format the version as "'v'major[.minor][-status]"
+                    options.GroupNameFormat = "'v'V";
 
-            services.AddHealthChecks();
+                    // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
+                    // can also be used to control the format of the API version in route templates
+                    options.SubstituteApiVersionInUrl = true;
+                    options.AssumeDefaultVersionWhenUnspecified = true;
+                    options.DefaultApiVersion = new ApiVersion(1, 0);
+                })
+                .AddHealthChecks()
+                .AddDbContextCheck<ApplicationDbContext>();
+
+            // https://docs.microsoft.com/en-us/aspnet/core/migration/31-to-50?view=aspnetcore-5.0&tabs=visual-studio#usedatabaseerrorpage-obsolete
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
             //Setup token validation method
             ConfigureTokenValidation(services);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime appLifetime)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
         {
             if (env.IsProduction())
             {
@@ -74,18 +91,13 @@ namespace check_yo_self_api
             else
             {
                 app.AddDevMiddlewares();
+                app.UseCustomSwaggerApi(Configuration, apiVersionDescriptionProvider);
             }
 
-            var provider = new FileExtensionContentTypeProvider();
-            provider.Mappings[".po"] = "text/plain";
-
             app.SetupMigrations()
-                .UseXsrf()
                 .UseCors("AllowAll")
-                .UseStaticFiles()
-<<<<<<< Updated upstream
-=======
                 .UseRouting()
+                .UseAuthentication()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
@@ -94,39 +106,29 @@ namespace check_yo_self_api
                         pattern: "{controller=Home}/{action=Index}/{id?}"
                     );
 
-                    endpoints.MapHealthChecks("/health");
-                    
-                    // default route for MVC/API controllers
-                    // endpoints.MapRoute(
-                    //     name: "default",
-                    //     template: "{controller=Home}/{action=Index}/{id?}");
-
-                    // // fallback route for anything that does not match an MVC/API controller
-                    // // this will load the angular app and allow for the angular routes to work.
-                    // routes.MapSpaFallbackRoute(
-                    //     name: "spa-fallback",
-                    //     defaults: new { controller = "Home", action = "Index" });
+                    endpoints.MapHealthChecks("/health").AllowAnonymous();
                 })
->>>>>>> Stashed changes
-                .UseAuthentication()
                 // Enable middleware to serve generated Swagger as a JSON endpoint
-                .UseOpenApi()
-                .UseMvc(routes =>
-                {
-                    // default route for MVC/API controllers
-                    routes.MapRoute(
-                        name: "default",
-                        template: "{controller=Home}/{action=Index}/{id?}");
-                });
+                .UseOpenApi();
 
-            IHttpContextAccessor httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
+            // Enable https on swagger in production. If you are planning to use http instead of https in production, 
+            // please remove this code block
+            app.UseOpenApi(configure =>
+            {
+                if (env.IsProduction())
+                {
+                    configure.PostProcess = (document, _) => document.Schemes = new[] { NSwag.OpenApiSchema.Https };
+                }
+            });
+
+            var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
             Context.Configure(httpContextAccessor);
         }
 
         private void ConfigureTokenValidation(IServiceCollection services)
         {
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     //Grab Configuration
                     var oidcAuthority = Configuration.GetValue<string>("OIDC:Authority");
@@ -134,7 +136,13 @@ namespace check_yo_self_api
 
                     //
                     options.Authority = oidcAuthority;
-                    options.ApiName = audience;
+                    options.Audience = audience;
+                    options.MapInboundClaims = false;
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = !string.IsNullOrEmpty(audience)
+                    };
 
                     // setting to false to promote working in a docker container
                     options.RequireHttpsMetadata = false; // _env.IsProduction();

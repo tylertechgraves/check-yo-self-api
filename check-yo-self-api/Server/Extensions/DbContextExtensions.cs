@@ -8,14 +8,6 @@ namespace check_yo_self_api.Server.Extensions
 {
     public static class DbContextExtensions
     {
-        public static void Seed(this ApplicationDbContext context, IWebHost host)
-        {
-            if (context.AllMigrationsApplied())
-            {
-                var seed = new SeedDbData(host, context);
-            }
-        }
-
         public static bool AllMigrationsApplied(this ApplicationDbContext context)
         {
             var applied = context.GetService<IHistoryRepository>()

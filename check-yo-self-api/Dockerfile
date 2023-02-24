@@ -1,7 +1,9 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-alpine
-ARG Configuration=Debug
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+ARG Configuration=Release
 WORKDIR /app
-EXPOSE 80
-COPY bin/$Configuration/netcoreapp2.2/linux-musl-x64/publish .
-ENV urls "http://*:80"
+EXPOSE 8080
+COPY bin/$Configuration/net7.0/publish .
+RUN useradd -ms /bin/bash armadillo
+USER armadillo
+ENV ASPNETCORE_URLS "http://*:8080"
 ENTRYPOINT ["dotnet", "check-yo-self-api.dll"]

@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using check_yo_self_api.Server.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,29 +11,17 @@ namespace check_yo_self_api.Server
         public static void Process(string[] args, IWebHost host)
         {
             var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
-            var seedService = (SeedDbData)host.Services.GetService(typeof(SeedDbData));
 
-            using (var scope = services.CreateScope())
+            using var scope = services.CreateScope();
+            var db = GetApplicationDbContext(scope);
+            if (args.Contains("dropdb"))
             {
-                var db = GetApplicationDbContext(scope);
-                if (args.Contains("dropdb"))
-                {
-                    Console.WriteLine("Dropping database");
-                    db.Database.EnsureDeleted();
-                }
-
-                // if (args.Contains("migratedb"))
-                // {
-                Console.WriteLine("Migrating database");
-                db.Database.Migrate();
-                // }
-
-                // if (args.Contains("seeddb"))
-                // {
-                Console.WriteLine("Seeding database");
-                db.Seed(host);
-                // }
+                Console.WriteLine("Dropping database");
+                db.Database.EnsureDeleted();
             }
+
+            Console.WriteLine("Migrating database");
+            db.Database.Migrate();
         }
 
         private static ApplicationDbContext GetApplicationDbContext(IServiceScope services)

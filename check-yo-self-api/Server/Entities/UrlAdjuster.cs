@@ -7,9 +7,9 @@ namespace check_yo_self_api.Server
             return string.IsNullOrWhiteSpace(input) ? input : input.Replace("{host}", Context.GetHost());
         }
 
-        public static string SetTrailingSlash(string input, bool addSlash = true) 
+        public static string SetTrailingSlash(string input, bool addSlash = true)
         {
-            if(!string.IsNullOrWhiteSpace(input))
+            if (!string.IsNullOrWhiteSpace(input))
             {
                 var trimmed = input.TrimEnd('/');
                 return addSlash ? trimmed + "/" : trimmed;
@@ -17,7 +17,8 @@ namespace check_yo_self_api.Server
             return input;
         }
 
-        public static string ReplaceHostAndSetTrailingSlash(string input, bool addSlash = true) {
+        public static string ReplaceHostAndSetTrailingSlash(string input, bool addSlash = true)
+        {
             return SetTrailingSlash(ReplaceHost(input), addSlash);
         }
     }

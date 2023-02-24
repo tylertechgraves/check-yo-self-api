@@ -19,7 +19,7 @@ namespace check_yo_self_api.Server.Controllers.api
         //private readonly HttpClient _client;
 
         private readonly ILogger _logger;
-        
+
         public GettingStartedController(/*ApplicationDbContext context, IHttpClientAccessor httpClientAccessor,*/ ILoggerFactory loggerFactory)
         {
             //_context = context;

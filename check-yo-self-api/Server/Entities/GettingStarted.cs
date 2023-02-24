@@ -7,7 +7,7 @@ namespace check_yo_self_api.Server.Entities
     {
         [Key]
         [JsonIgnore]
-        public string _id {get; set;}
+        public string _id { get; set; }
         public string ApplicationName { get; set; }
     }
 }
