@@ -235,3 +235,5 @@ check-yo-self-api-SDK/bin
 check-yo-self-api-SDK/logs
 check-yo-self-api-SDK/out
 check-yo-self-api/Employee.db
+
+.DS_store

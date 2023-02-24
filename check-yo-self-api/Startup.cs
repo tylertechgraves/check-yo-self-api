@@ -76,8 +76,6 @@ namespace check_yo_self_api
                 app.AddDevMiddlewares();
             }
 
-            app.UseHealthChecks("/health");
-
             var provider = new FileExtensionContentTypeProvider();
             provider.Mappings[".po"] = "text/plain";
 
@@ -85,6 +83,31 @@ namespace check_yo_self_api
                 .UseXsrf()
                 .UseCors("AllowAll")
                 .UseStaticFiles()
+<<<<<<< Updated upstream
+=======
+                .UseRouting()
+                .UseAuthorization()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}"
+                    );
+
+                    endpoints.MapHealthChecks("/health");
+                    
+                    // default route for MVC/API controllers
+                    // endpoints.MapRoute(
+                    //     name: "default",
+                    //     template: "{controller=Home}/{action=Index}/{id?}");
+
+                    // // fallback route for anything that does not match an MVC/API controller
+                    // // this will load the angular app and allow for the angular routes to work.
+                    // routes.MapSpaFallbackRoute(
+                    //     name: "spa-fallback",
+                    //     defaults: new { controller = "Home", action = "Index" });
+                })
+>>>>>>> Stashed changes
                 .UseAuthentication()
                 // Enable middleware to serve generated Swagger as a JSON endpoint
                 .UseOpenApi()
