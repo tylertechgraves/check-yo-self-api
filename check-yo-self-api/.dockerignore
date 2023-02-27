@@ -1,3 +1,3 @@
 **
-!bin/Release/netcoreapp2.2/linux-musl-x64/publish
-!bin/Debug/netcoreapp2.2/linux-musl-x64/publish
+!bin/Release/net7.0/publish
+!bin/Debug/net7.0/publish

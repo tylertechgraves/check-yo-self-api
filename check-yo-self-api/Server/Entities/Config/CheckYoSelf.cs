@@ -1,7 +1,6 @@
-namespace check_yo_self_api.Server.Entities.Config
+namespace check_yo_self_api.Server.Entities.Config;
+
+public class CheckYoSelf
 {
-    public class CheckYoSelf
-    {
-        public string IndexerBaseUri { get; set; }
-    }
+    public string IndexerBaseUri { get; set; }
 }

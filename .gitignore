@@ -237,3 +237,6 @@ check-yo-self-api-SDK/out
 check-yo-self-api/Employee.db
 
 .DS_store
+
+/docker-compose/infrastructure/elasticsearch-data/**
+!/docker-compose/infrastructure/elasticsearch-data/.gitkeep
