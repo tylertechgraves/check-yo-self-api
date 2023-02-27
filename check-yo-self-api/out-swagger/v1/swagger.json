@@ -6,23 +6,12 @@
     "version": "v1"
   },
   "paths": {
-    "/api/Employees": {
+    "/api/v1/Employees": {
       "get": {
         "tags": [
           "Employees"
         ],
         "operationId": "Employees_GetAll",
-        "parameters": [
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 1
-          }
-        ],
         "responses": {
           "200": {
             "description": "",
@@ -47,17 +36,6 @@
           "Employees"
         ],
         "operationId": "Employees_Post",
-        "parameters": [
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
-          }
-        ],
         "requestBody": {
           "x-name": "employee",
           "content": {
@@ -97,7 +75,7 @@
         }
       }
     },
-    "/api/Employees/{employeeId}": {
+    "/api/v1/Employees/{employeeId}": {
       "get": {
         "tags": [
           "Employees"
@@ -113,15 +91,6 @@
               "format": "int32"
             },
             "x-position": 1
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
           }
         ],
         "responses": {
@@ -165,15 +134,6 @@
               "format": "int32"
             },
             "x-position": 1
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 3
           }
         ],
         "requestBody": {
@@ -218,7 +178,7 @@
         }
       }
     },
-    "/api/Employees/GetByLastName/{lastName}": {
+    "/api/v1/Employees/GetByLastName/{lastName}": {
       "get": {
         "tags": [
           "Employees"
@@ -234,15 +194,6 @@
               "nullable": true
             },
             "x-position": 1
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
           }
         ],
         "responses": {
@@ -275,7 +226,7 @@
         }
       }
     },
-    "/api/Employees/GetByFullName/{firstName}/{lastName}": {
+    "/api/v1/Employees/GetByFullName/{firstName}/{lastName}": {
       "get": {
         "tags": [
           "Employees"
@@ -301,15 +252,6 @@
               "nullable": true
             },
             "x-position": 2
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 3
           }
         ],
         "responses": {
@@ -352,60 +294,18 @@
         }
       }
     },
-    "/api/Employees/ReindexAllEmployees": {
+    "/api/v1/Employees/ReindexAllEmployees": {
       "post": {
         "tags": [
           "Employees"
         ],
         "operationId": "Employees_ReindexAllEmployees",
-        "parameters": [
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 1
-          }
-        ],
         "responses": {
           "200": {
             "description": ""
           },
           "500": {
             "description": ""
-          }
-        }
-      }
-    },
-    "/api/GettingStarted": {
-      "get": {
-        "tags": [
-          "GettingStarted"
-        ],
-        "operationId": "GettingStarted_Get",
-        "parameters": [
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GettingStarted"
-                }
-              }
-            }
           }
         }
       }
@@ -478,16 +378,6 @@
           "extensions": {
             "type": "object",
             "additionalProperties": {}
-          }
-        }
-      },
-      "GettingStarted": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "applicationName": {
-            "type": "string",
-            "nullable": true
           }
         }
       }

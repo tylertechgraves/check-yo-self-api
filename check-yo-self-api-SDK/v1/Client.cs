@@ -21,53 +21,53 @@ namespace check_yo_self_api_client.V1
     public partial interface IEmployeesClient
     {
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetAllAsync(string api_version);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetAllAsync();
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetAllAsync(string api_version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetAllAsync(System.Threading.CancellationToken cancellationToken);
 
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Employee> PostAsync(string api_version, Employee employee);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Employee> PostAsync(string api_version, Employee employee, System.Threading.CancellationToken cancellationToken);
-
-        /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Employee> GetByIdAsync(int employeeId, string api_version);
+        System.Threading.Tasks.Task<Employee> PostAsync(Employee employee);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Employee> GetByIdAsync(int employeeId, string api_version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<Employee> PostAsync(Employee employee, System.Threading.CancellationToken cancellationToken);
 
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateAsync(int employeeId, string api_version, Employee employee);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateAsync(int employeeId, string api_version, Employee employee, System.Threading.CancellationToken cancellationToken);
-
-        /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByLastNameAsync(string lastName, string api_version);
+        System.Threading.Tasks.Task<Employee> GetByIdAsync(int employeeId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByLastNameAsync(string lastName, string api_version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<Employee> GetByIdAsync(int employeeId, System.Threading.CancellationToken cancellationToken);
 
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFullNameAsync(string firstName, string lastName, string api_version);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFullNameAsync(string firstName, string lastName, string api_version, System.Threading.CancellationToken cancellationToken);
-
-        /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ReindexAllEmployeesAsync(string api_version);
+        System.Threading.Tasks.Task UpdateAsync(int employeeId, Employee employee);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ReindexAllEmployeesAsync(string api_version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task UpdateAsync(int employeeId, Employee employee, System.Threading.CancellationToken cancellationToken);
+
+        /// <exception cref="SdkException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByLastNameAsync(string lastName);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="SdkException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByLastNameAsync(string lastName, System.Threading.CancellationToken cancellationToken);
+
+        /// <exception cref="SdkException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFullNameAsync(string firstName, string lastName);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="SdkException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFullNameAsync(string firstName, string lastName, System.Threading.CancellationToken cancellationToken);
+
+        /// <exception cref="SdkException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task ReindexAllEmployeesAsync();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="SdkException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task ReindexAllEmployeesAsync(System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -97,22 +97,17 @@ namespace check_yo_self_api_client.V1
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetAllAsync(string api_version)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetAllAsync()
         {
-            return GetAllAsync(api_version, System.Threading.CancellationToken.None);
+            return GetAllAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetAllAsync(string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees?");
-            if (api_version != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("api-version") + "=").Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v1/Employees");
 
             var client_ = await CreateHttpClientAsync(cancellationToken).ConfigureAwait(false);
             var disposeClient_ = false;
@@ -180,25 +175,20 @@ namespace check_yo_self_api_client.V1
         }
 
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<Employee> PostAsync(string api_version, Employee employee)
+        public virtual System.Threading.Tasks.Task<Employee> PostAsync(Employee employee)
         {
-            return PostAsync(api_version, employee, System.Threading.CancellationToken.None);
+            return PostAsync(employee, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Employee> PostAsync(string api_version, Employee employee, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<Employee> PostAsync(Employee employee, System.Threading.CancellationToken cancellationToken)
         {
             if (employee == null)
                 throw new System.ArgumentNullException("employee");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees?");
-            if (api_version != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("api-version") + "=").Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v1/Employees");
 
             var client_ = await CreateHttpClientAsync(cancellationToken).ConfigureAwait(false);
             var disposeClient_ = false;
@@ -280,26 +270,21 @@ namespace check_yo_self_api_client.V1
         }
 
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<Employee> GetByIdAsync(int employeeId, string api_version)
+        public virtual System.Threading.Tasks.Task<Employee> GetByIdAsync(int employeeId)
         {
-            return GetByIdAsync(employeeId, api_version, System.Threading.CancellationToken.None);
+            return GetByIdAsync(employeeId, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Employee> GetByIdAsync(int employeeId, string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<Employee> GetByIdAsync(int employeeId, System.Threading.CancellationToken cancellationToken)
         {
             if (employeeId == null)
                 throw new System.ArgumentNullException("employeeId");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/{employeeId}?");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v1/Employees/{employeeId}");
             urlBuilder_.Replace("{employeeId}", System.Uri.EscapeDataString(ConvertToString(employeeId, System.Globalization.CultureInfo.InvariantCulture)));
-            if (api_version != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("api-version") + "=").Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
 
             var client_ = await CreateHttpClientAsync(cancellationToken).ConfigureAwait(false);
             var disposeClient_ = false;
@@ -377,14 +362,14 @@ namespace check_yo_self_api_client.V1
         }
 
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateAsync(int employeeId, string api_version, Employee employee)
+        public virtual System.Threading.Tasks.Task UpdateAsync(int employeeId, Employee employee)
         {
-            return UpdateAsync(employeeId, api_version, employee, System.Threading.CancellationToken.None);
+            return UpdateAsync(employeeId, employee, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateAsync(int employeeId, string api_version, Employee employee, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task UpdateAsync(int employeeId, Employee employee, System.Threading.CancellationToken cancellationToken)
         {
             if (employeeId == null)
                 throw new System.ArgumentNullException("employeeId");
@@ -393,13 +378,8 @@ namespace check_yo_self_api_client.V1
                 throw new System.ArgumentNullException("employee");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/{employeeId}?");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v1/Employees/{employeeId}");
             urlBuilder_.Replace("{employeeId}", System.Uri.EscapeDataString(ConvertToString(employeeId, System.Globalization.CultureInfo.InvariantCulture)));
-            if (api_version != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("api-version") + "=").Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
 
             var client_ = await CreateHttpClientAsync(cancellationToken).ConfigureAwait(false);
             var disposeClient_ = false;
@@ -485,23 +465,18 @@ namespace check_yo_self_api_client.V1
         }
 
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByLastNameAsync(string lastName, string api_version)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByLastNameAsync(string lastName)
         {
-            return GetByLastNameAsync(lastName, api_version, System.Threading.CancellationToken.None);
+            return GetByLastNameAsync(lastName, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByLastNameAsync(string lastName, string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByLastNameAsync(string lastName, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/GetByLastName/{lastName}?");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v1/Employees/GetByLastName/{lastName}");
             urlBuilder_.Replace("{lastName}", System.Uri.EscapeDataString(ConvertToString(lastName, System.Globalization.CultureInfo.InvariantCulture)));
-            if (api_version != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("api-version") + "=").Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
 
             var client_ = await CreateHttpClientAsync(cancellationToken).ConfigureAwait(false);
             var disposeClient_ = false;
@@ -579,24 +554,19 @@ namespace check_yo_self_api_client.V1
         }
 
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFullNameAsync(string firstName, string lastName, string api_version)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFullNameAsync(string firstName, string lastName)
         {
-            return GetByFullNameAsync(firstName, lastName, api_version, System.Threading.CancellationToken.None);
+            return GetByFullNameAsync(firstName, lastName, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFullNameAsync(string firstName, string lastName, string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Employee>> GetByFullNameAsync(string firstName, string lastName, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/GetByFullName/{firstName}/{lastName}?");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v1/Employees/GetByFullName/{firstName}/{lastName}");
             urlBuilder_.Replace("{firstName}", System.Uri.EscapeDataString(ConvertToString(firstName, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{lastName}", System.Uri.EscapeDataString(ConvertToString(lastName, System.Globalization.CultureInfo.InvariantCulture)));
-            if (api_version != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("api-version") + "=").Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
 
             var client_ = await CreateHttpClientAsync(cancellationToken).ConfigureAwait(false);
             var disposeClient_ = false;
@@ -684,22 +654,17 @@ namespace check_yo_self_api_client.V1
         }
 
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ReindexAllEmployeesAsync(string api_version)
+        public virtual System.Threading.Tasks.Task ReindexAllEmployeesAsync()
         {
-            return ReindexAllEmployeesAsync(api_version, System.Threading.CancellationToken.None);
+            return ReindexAllEmployeesAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ReindexAllEmployeesAsync(string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task ReindexAllEmployeesAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Employees/ReindexAllEmployees?");
-            if (api_version != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("api-version") + "=").Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v1/Employees/ReindexAllEmployees");
 
             var client_ = await CreateHttpClientAsync(cancellationToken).ConfigureAwait(false);
             var disposeClient_ = false;
@@ -740,223 +705,6 @@ namespace check_yo_self_api_client.V1
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
                             throw new SdkException("A server side error occurred.", status_, responseText_, headers_, null);
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SdkException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        protected struct ObjectResponseResult<T>
-        {
-            public ObjectResponseResult(T responseObject, string responseText)
-            {
-                this.Object = responseObject;
-                this.Text = responseText;
-            }
-
-            public T Object { get; }
-
-            public string Text { get; }
-        }
-
-        public bool ReadResponseAsString { get; set; }
-
-        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
-        {
-            if (response == null || response.Content == null)
-            {
-                return new ObjectResponseResult<T>(default(T), string.Empty);
-            }
-
-            if (ReadResponseAsString)
-            {
-                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
-                    return new ObjectResponseResult<T>(typedBody, responseText);
-                }
-                catch (Newtonsoft.Json.JsonException exception)
-                {
-                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
-                    throw new SdkException(message, (int)response.StatusCode, responseText, headers, exception);
-                }
-            }
-            else
-            {
-                try
-                {
-                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                    using (var streamReader = new System.IO.StreamReader(responseStream))
-                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
-                    {
-                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
-                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
-                        return new ObjectResponseResult<T>(typedBody, string.Empty);
-                    }
-                }
-                catch (Newtonsoft.Json.JsonException exception)
-                {
-                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
-                    throw new SdkException(message, (int)response.StatusCode, string.Empty, headers, exception);
-                }
-            }
-        }
-
-        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
-        {
-            if (value == null)
-            {
-                return "";
-            }
-
-            if (value is System.Enum)
-            {
-                var name = System.Enum.GetName(value.GetType(), value);
-                if (name != null)
-                {
-                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
-                    if (field != null)
-                    {
-                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
-                            as System.Runtime.Serialization.EnumMemberAttribute;
-                        if (attribute != null)
-                        {
-                            return attribute.Value != null ? attribute.Value : name;
-                        }
-                    }
-
-                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
-                    return converted == null ? string.Empty : converted;
-                }
-            }
-            else if (value is bool) 
-            {
-                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
-            }
-            else if (value is byte[])
-            {
-                return System.Convert.ToBase64String((byte[]) value);
-            }
-            else if (value.GetType().IsArray)
-            {
-                var array = System.Linq.Enumerable.OfType<object>((System.Array) value);
-                return string.Join(",", System.Linq.Enumerable.Select(array, o => ConvertToString(o, cultureInfo)));
-            }
-
-            var result = System.Convert.ToString(value, cultureInfo);
-            return result == null ? "" : result;
-        }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface IGettingStartedClient
-    {
-        /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GettingStarted> GetAsync(string api_version);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SdkException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GettingStarted> GetAsync(string api_version, System.Threading.CancellationToken cancellationToken);
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GettingStartedClient : check_yo_self_api_client.ClientBase, IGettingStartedClient
-    {
-        private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
-
-        public GettingStartedClient(check_yo_self_api_client.Configuration.SdkConfiguration configuration) : base(configuration)
-        {
-            _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
-        }
-
-        private Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
-        {
-            var settings = new Newtonsoft.Json.JsonSerializerSettings();
-            UpdateJsonSerializerSettings(settings);
-            return settings;
-        }
-
-        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
-
-        partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
-
-        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
-        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
-        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
-
-        /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GettingStarted> GetAsync(string api_version)
-        {
-            return GetAsync(api_version, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SdkException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GettingStarted> GetAsync(string api_version, System.Threading.CancellationToken cancellationToken)
-        {
-            var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/GettingStarted?");
-            if (api_version != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("api-version") + "=").Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
-
-            var client_ = await CreateHttpClientAsync(cancellationToken).ConfigureAwait(false);
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GettingStarted>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new SdkException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -1154,27 +902,6 @@ namespace check_yo_self_api_client.V1
         {
 
             return Newtonsoft.Json.JsonConvert.DeserializeObject<ProblemDetails>(data, new Newtonsoft.Json.JsonSerializerSettings());
-
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GettingStarted
-    {
-        [Newtonsoft.Json.JsonProperty("applicationName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ApplicationName { get; set; }
-
-        public string ToJson()
-        {
-
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
-
-        }
-        public static GettingStarted FromJson(string data)
-        {
-
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<GettingStarted>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 

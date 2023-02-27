@@ -15,8 +15,9 @@ using Microsoft.Extensions.Options;
 
 namespace check_yo_self_api.Server.Controllers.api
 {
-    [Route("api/[controller]")]
     [AllowAnonymous]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class EmployeesController : BaseController
     {
         private readonly ApplicationDbContext _context;
