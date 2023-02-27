@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
 using System.Net.Http;
+using Microsoft.Extensions.Logging;
 
 namespace check_yo_self_api_client.Configuration;
 

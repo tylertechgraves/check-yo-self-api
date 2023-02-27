@@ -31,6 +31,7 @@ public abstract class TokenClient
         // _allowAuthTokenHttpAuthority = config.AllowAuthTokenHttpAuthority;
     }
 
+#pragma warning disable IDE0060 
     protected async Task<HttpRequestMessage> CreateHttpRequestMessageAsync(CancellationToken cancellationToken)
     {
         _logger.LogDebug("Create HttpRequestMessage");
@@ -41,7 +42,6 @@ public abstract class TokenClient
         return request;
     }
 
-#pragma warning disable IDE0060
     protected Task<HttpClient> CreateHttpClientAsync(CancellationToken cancellationToken) => Task.FromResult(_httpClient);
 #pragma warning restore IDE0060
 }
