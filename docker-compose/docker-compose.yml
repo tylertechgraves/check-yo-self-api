@@ -2,31 +2,31 @@ version: '3.5'
 services:
 
   check-yo-self:
-    image: check-yo-self:1.0.2
+    image: check-yo-self-local:1.0.0
     ports:
-      - 5000:80
+      - 5050:8080
     environment:
-      - CheckYoSelf__employeesApiBaseUrl=http://check-yo-self-api/
+      - CheckYoSelf__employeesApiBaseUrl=http://check-yo-self-api:8080/
       - CheckYoSelf__employeesButtonVisible=true
     depends_on: 
       - check-yo-self-api
 
   check-yo-self-api:
-    image: check-yo-self-api:1.0.4
+    image: check-yo-self-api-local:1.0.0
     ports:
-      - 5001:80
+      - 5051:8080
     environment:
-      - CheckYoSelf__IndexerBaseUri=http://check-yo-self-indexer/
+      - CheckYoSelf__IndexerBaseUri=http://check-yo-self-indexer:8080/
       - Data__DatabaseDriver=MySql
-      - Data__MySql__ConnectionString=Server=db;Port=3306;Database=employees;Uid=root;Pwd=checkyoself
+      - Data__MySql__ConnectionString=Server=check-yo-self-db;Port=3306;Database=employees;Uid=root;Pwd=checkyoself
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on: 
       - check-yo-self-indexer
 
   check-yo-self-indexer:
-    image: check-yo-self-indexer:1.0.1
+    image: check-yo-self-indexer-local:1.0.0
     ports:
-      - 5002:80
+      - 5052:8080
     environment: 
       - Elasticsearch__uri=http://elasticsearch:9200
       - Elasticsearch__username=elastic
@@ -39,13 +39,13 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
 
   check-yo-self-bootstrapper:
-    image: check-yo-self-bootstrapper:1.0.0
+    image: check-yo-self-bootstrapper-local:1.0.0
     environment: 
-      - APICONTAINER=check-yo-self-api
+      - APICONTAINER=check-yo-self-api:8080
     depends_on: 
       - check-yo-self-api
 
 networks:
   default:
     external:
-      name: platform
+      name: checkyoself
