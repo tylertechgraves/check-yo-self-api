@@ -28,7 +28,7 @@ services:
     ports:
       - 5052:8080
     environment: 
-      - Elasticsearch__uri=http://opensearch:9200
+      - Elasticsearch__uri=http://elasticsearch:9200
       - Elasticsearch__username=elastic
       - Elasticsearch__password=ElasticAdmin1
       - Elasticsearch__indexName=employees

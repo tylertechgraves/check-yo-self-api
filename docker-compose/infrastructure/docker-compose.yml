@@ -16,20 +16,39 @@ services:
       - MYSQL_DEFAULTS_FILE=/etc/mysql/my.cnf
       - MYSQL_LOG_QUERIES_ENABLED=1
 
-  opensearch:
-    image: opensearchproject/opensearch:1
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.4
     ports:
       - 9200:9200
-      - 9600:9600
-    mem_limit: 4g
     environment:
       - ELASTIC_PASSWORD=ElasticAdmin1
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
       - discovery.type=single-node
-      - "DISABLE_INSTALL_DEMO_CONFIG=true"
-      - "DISABLE_SECURITY_PLUGIN=true"
     volumes:
-      - opensearch-data:/usr/share/opensearch/data
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.4
+    ports:
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTIC_PASSWORD=ElasticAdmin1
+
+  # opensearch:
+  #   image: opensearchproject/opensearch:1
+  #   ports:
+  #     - 9200:9200
+  #     - 9600:9600
+  #   mem_limit: 4g
+  #   environment:
+  #     - ELASTIC_PASSWORD=ElasticAdmin1
+  #     - ES_JAVA_OPTS=-Xms512m -Xmx512m
+  #     - discovery.type=single-node
+  #     - "DISABLE_INSTALL_DEMO_CONFIG=true"
+  #     - "DISABLE_SECURITY_PLUGIN=true"
+  #   volumes:
+  #     - opensearch-data:/usr/share/opensearch/data
 
   # opensearch-dashboards:
   #   image: opensearchproject/opensearch-dashboards:1
@@ -42,12 +61,12 @@ services:
   #     - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true" # disables security dashboards plugin in OpenSearch Dashboards
 
 volumes:
-  opensearch-data:
+  elasticsearch-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ${PWD}/opensearch-data
+      device: ${PWD}/elasticsearch-data
   mysql-data:
 
 networks:

@@ -238,5 +238,5 @@ check-yo-self-api/Employee.db
 
 .DS_store
 
-/docker-compose/infrastructure/opensearch-data/**
-!/docker-compose/infrastructure/opensearch-data/.gitkeep
+/docker-compose/infrastructure/elasticsearch-data/**
+!/docker-compose/infrastructure/elasticsearch-data/.gitkeep
