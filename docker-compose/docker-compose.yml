@@ -2,7 +2,7 @@ version: '3.5'
 services:
 
   check-yo-self:
-    image: check-yo-self-local:1.0.0
+    image: tylertech-scratch-docker-local.jfrog.io/check-yo-self-markgraves:1.0.0
     ports:
       - 5050:8080
     environment:
@@ -12,7 +12,7 @@ services:
       - check-yo-self-api
 
   check-yo-self-api:
-    image: check-yo-self-api-local:1.0.0
+    image: tylertech-scratch-docker-local.jfrog.io/check-yo-self-api:1.0.0
     ports:
       - 5051:8080
     environment:
@@ -24,11 +24,11 @@ services:
       - check-yo-self-indexer
 
   check-yo-self-indexer:
-    image: check-yo-self-indexer-local:1.0.0
+    image: tylertech-scratch-docker-local.jfrog.io/check-yo-self-indexer:1.0.13
     ports:
       - 5052:8080
     environment: 
-      - Elasticsearch__uri=http://elasticsearch:9200
+      - Elasticsearch__uri=http://opensearch:9200
       - Elasticsearch__username=elastic
       - Elasticsearch__password=ElasticAdmin1
       - Elasticsearch__indexName=employees
@@ -39,7 +39,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
 
   check-yo-self-bootstrapper:
-    image: check-yo-self-bootstrapper-local:1.0.0
+    image: tylertech-scratch-docker-local.jfrog.io/check-yo-self-bootstrapper:1.0.0
     environment: 
       - APICONTAINER=check-yo-self-api:8080
     depends_on: 
